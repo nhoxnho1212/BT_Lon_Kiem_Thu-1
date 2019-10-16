@@ -70,7 +70,7 @@ class QuanLyHocVien:
             sub_ds['MSSV'] = hocvien.get_mssv()
             sub_ds['Ngay sinh'] = hocvien.get_ngaySinh()
             sub_ds['Khuon mat ma hoa'] = hocvien.get_khuonMat()
-            ds['Hoc vien' + str(i)] = sub_ds
+            ds['Hoc vien ' + str(i)] = sub_ds
             i = i + 1
         ds_json = pd.DataFrame(ds)
         ds_csv = pd.DataFrame(ds_list)
@@ -79,9 +79,9 @@ class QuanLyHocVien:
         ds_json.to_json(sub[0]+".json",orient = 'columns' )
     
     def loadDanhSach(self,path):
-        i = 0
         if(path.split('.')[1] == 'json'):
-            ds_csv = pd.read_json(path)
+            print('you must give an csv file')
+            return 0
         else:
             ds_csv = pd.read_csv(path)
         ds = ds_csv.values.tolist()
@@ -96,4 +96,6 @@ class QuanLyHocVien:
             khuonmat = np.asarray(ls)
             ds_ls.addHv(mssv,hoten,ngaysinh,khuonmat)
         return ds_ls
-        
+    
+    def get_danhSach(self):
+        return self.__danhSachHocVien
