@@ -66,9 +66,9 @@ class QuanLyHocVien:
                 sub_list.append(j)
             ds_list.append(sub_list)
             sub_ds = dict()
-            sub_ds['Ho ten'] = hocvien.get_hoTen()
+            sub_ds['Hoten'] = hocvien.get_hoTen()
             sub_ds['MSSV'] = hocvien.get_mssv()
-            sub_ds['Ngay sinh'] = hocvien.get_ngaySinh()
+            sub_ds['Ngaysinh'] = hocvien.get_ngaySinh()
             sub_ds['Khuon mat ma hoa'] = hocvien.get_khuonMat()
             ds['Hoc vien ' + str(i)] = sub_ds
             i = i + 1

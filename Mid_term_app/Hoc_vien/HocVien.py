@@ -20,3 +20,8 @@ class HocVien:
         return self.__ngaySinh
     def get_khuonMat(self):
         return self.__khuonMat
+    def __str__(self):
+        hocvien = 'Ho ten: ' + self.__hoTen + '\n'
+        hocvien += 'MSSV: ' + self.__mssv + '\n'
+        hocvien += 'Ngay sinh: ' + self.__ngaySinh + '\n'
+        return hocvien
