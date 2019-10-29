@@ -1,7 +1,6 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, Alert} from 'react-native';
 import ChooseLogin from './chooseTypeLogin';
-import * as FileSystem from 'expo-file-system';
 
 //connect firebase
 import * as firebase from 'firebase';
@@ -9,8 +8,7 @@ import firestore from 'firebase/firestore'
 import { database } from 'firebase/database';
 
 
-"use strict";
-
+//config firebase
 const config = {
     apiKey: "AIzaSyD38d0u1HW2Q0yZCtYf_YxRwyU_oW3lddE",
     //   authDomain: "YOUR_AUTH_DOMAIN",
@@ -22,22 +20,7 @@ const config = {
 firebase.initializeApp(config);
 
 // -------------------------------------------------
-//write file json
-async function writeToFileJson(path, StringJson) {
-    await FileSystem.writeAsStringAsync(path,StringJson)
-    .then(()=>{
-        console.log('writeCompleted');
-    })
-    .catch((error)=> {
-        console.log(error.message);
-    });    
-}
-//read file json
-async function readFile(path) {
-    const fileContents = await FileSystem.readFile(path);
-    console.log(`read from file: ${fileContents}`);
-    return fileContents;
-}
+
 
 
 class Login extends Component {
@@ -49,6 +32,8 @@ class Login extends Component {
     };
     countTime = 0;
     pathDB = '';
+    component = this;
+    
     constructor(props) {
         super(props);
 
@@ -57,7 +42,7 @@ class Login extends Component {
             password: '',
             Data: [],
             isTeacher: false,
-            isValidAccount: false,
+            
         };
         if (ChooseLogin.GetIsTeacher() == true) {
             this.pathDB = 'Users/Teachers/';
@@ -66,77 +51,85 @@ class Login extends Component {
             this.pathDB = 'Users/Students/';
         }
 
+        this.LoadFireBase();
+        this.LoadFireBase();
     }
     ObjectToArr(Obj) {
         const result = Object.keys(Obj).map(key => ({ [key]: Obj[key] }));
         return result;
     }
 
+    static isValidAccount = false;
     checkUser(UserName, Password) {
-        try {
-            let isCheckAcc = false;
-            this.setState({ isValidAccount: false });
-            this.ObjectToArr(this.state.Data).map((item, key) => {
-                if ((UserName == item[key].userName) && (Password == item[key].password)) {
-                    this.setState({ isValidAccount: true });
-                    isCheckAcc = true;
-                } else {
+        // async () => {
+            try {
+                //load data
+                // if (this.state.Data.length == 0) {
+                //     this.loadDataFromLocalStorage();
+                // }
+                let isCheckAcc = false;
+                
+                this.ObjectToArr(this.state.Data).map((item, key) => {
+                    if ((UserName == item[key].userName) && (Password == item[key].password)) {
+                        isCheckAcc = true;
+                    } else {
 
+                    }
+                    
+
+                });
+                this.isValidAccount = isCheckAcc
+
+                if (isCheckAcc == false) {
+
+                    Alert.alert('', 'sai tên đăng nhập hoặc mật khẩu!');
                 }
 
-            });
-            console.log(isCheckAcc);
-            if (isCheckAcc == false) {
-
-                Alert.alert('', 'sai tên đăng nhập hoặc mật khẩu!');
             }
-
-        }
-        catch {
-            this.setState({ isValidAccount: false });
-            Alert.alert('', 'load Data fail!');
-        }
+            catch {
+                
+                Alert.alert('', 'load Data fail!');
+            }
+        // }
     }
 
-    RemoveBackspace(StringValue) {
-        // use regex to remove backspace in string
-        StringResult = StringValue.replace(/\s/g, '');
-        return StringResult;
-    }
-
-    ReadDatabase() {
-        GetDataUserFormFB = setTimeout(() => {
-            firebase.database().ref(this.pathDB).once('value', (snapshot) => {
-                this.setState({ Data: snapshot.toJSON() });
-                writeToFileJson('./cacheLogin.json', JSON.stringify(this.state.Data));
-            }).then(() => {
-                this.countTime += 1;
-                console.log('GETTED ' + this.pathDB + ' ! ' + this.countTime);
-
-            }).catch((error) => {
-                console.log(error.message);
-
-            });
-
-            var connectedRef = firebase.database().ref(".info/connected");
+    LoadFireBase() {
+        var connectedRef = firebase.database().ref(".info/connected");
             connectedRef.on("value", function (snap) {
                 if (snap.val() === true) {
                     console.log("connected");
+                    firebase.database().ref(this.pathDB).once('value', function (snapshot) {
+                        this.setState({ Data: snapshot.toJSON() });
+                    }.bind(this)).then(() => {
+                        this.countTime += 1;
+                        console.log('GETTED ' + this.pathDB + ' ! ' + this.countTime);
+
+                    }).catch((error) => {
+                        console.log(error.message);
+
+                    });
+
                 } else {
                     // alert("not connected");
                     console.log("not connected");
-                }
-            });
 
-        }, 1000 * 15)
+                }
+            }.bind(this));
+
+    }
+
+    ReadDatabase() {
+        GetDataUserFormFB = setTimeout(function () {
+            this.LoadFireBase();
+        }.bind(this), 1000 * 60*5) //set time to load database from firebase:  1 minutes
 
     }
 
     onPress = () => {
 
-        this.checkUser(this.RemoveBackspace(this.state.userName), this.RemoveBackspace(this.state.password));
+        this.checkUser(this.state.userName, this.state.password);
 
-        if (this.state.isValidAccount) {
+        if (this.isValidAccount) {
             clearTimeout(GetDataUserFormFB);
             return (this.props.navigation.navigate('HomeTeacher'));
         } else {
