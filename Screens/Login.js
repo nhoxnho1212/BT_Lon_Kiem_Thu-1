@@ -131,7 +131,12 @@ class Login extends Component {
 
         if (this.isValidAccount) {
             clearTimeout(GetDataUserFormFB);
-            return (this.props.navigation.navigate('HomeTeacher'));
+            if (this.state.isTeacher) {
+                return (this.props.navigation.navigate('HomeTeacher'));
+            }
+            else {
+                return this.props.navigation.navigate('HomeStudent');
+            }
         } else {
             return {};
         }

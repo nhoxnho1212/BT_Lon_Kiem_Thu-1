@@ -4,6 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import Login from "./Screens/Login";
 import ChooseLogin from './Screens/chooseTypeLogin';
 import HomeTeacher from './Screens/HomeTeacher';
+import HomeStudent from './Screens/HomeStudent'
 const Project= createStackNavigator({
   ChooseLogin: {
     screen: ChooseLogin,
@@ -16,6 +17,9 @@ const Project= createStackNavigator({
   HomeTeacher: {
     screen: HomeTeacher,
     
+  },
+  HomeStudent: {
+    screen: HomeStudent,
   }
   
 });
