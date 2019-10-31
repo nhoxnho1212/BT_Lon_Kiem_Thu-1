@@ -12,6 +12,8 @@ class HomeTeacher extends Component {
             AvatarDefault: './image/userAvatar.png'
         }
     }
+
+
     render() {
         const styles = StyleSheet.create({
             container: {
@@ -92,7 +94,9 @@ class HomeTeacher extends Component {
             },
         })
         return (
+            
             <View style={styles.container}>
+
                 <StatusBar hidden />
                 <Image source={require('./image/header.png')} style={styles.header} />
 
@@ -102,14 +106,14 @@ class HomeTeacher extends Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.buttonQuanLyLopHoc}>
-                    <Image source={require('./image/buttonQuanLyLopHoc.png')} style={{ height: '100%', width: '100%' }} />
+                    <Image source={require('./image/buttonQuanLyLopHoc.png')} style={{ height: '100%', width: '100%',resizeMode:'contain'}} />
                     <View style={styles.absoluteViewBtnThongKe}>
                         <Text style={styles.TextQuanLyMonHoc}>Quản lý môn học</Text>
                     </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.buttonThongKe}>
-                    <Image source={require('./image/buttonThongKe.png')} style={{ height: '100%', width: '100%' }} />
+                    <Image source={require('./image/buttonThongKe.png')} style={{ height: '100%', width: '100%' ,resizeMode:'contain'}} />
                     <View style={styles.absoluteViewBtnThongKe}>
                         <Text style={styles.TextThongKe}>Thống kê</Text>
                     </View>
@@ -119,5 +123,7 @@ class HomeTeacher extends Component {
         );
     }
 }
+
+
 
 export default HomeTeacher;

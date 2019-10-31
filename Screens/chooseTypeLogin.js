@@ -52,7 +52,7 @@ class ChooseLogin extends Component {
                 flex: 1,
                 position: 'absolute',
                 width: '100%',
-                height: '80%',
+                height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
 
@@ -72,8 +72,8 @@ class ChooseLogin extends Component {
             },
             btnSinhVien: {
                 position: 'absolute',
-                width: null,
-                height: null,
+                // width: null,
+                // height: 100,
                 left: '16.11%',
                 right: '16.11%',
                 top: '72.19%',
@@ -83,7 +83,7 @@ class ChooseLogin extends Component {
                 flex: 1,
                 position: 'absolute',
                 width: '100%',
-                height: '80%',
+                height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
 
@@ -116,7 +116,7 @@ class ChooseLogin extends Component {
                     }}
                     style={styles.btnGiangVien}
                 >
-                    <Image source={require('./image/buttonGiangVien.png')} />
+                    <Image source={require('./image/buttonGiangVien.png')} style= {{width:'100%',height:'100%',resizeMode:'contain'}} />
                     <View style={styles.absoluteViewBtnGiangVien}>
                         <Text style={styles.TextGiangVien}>Giảng viên</Text>
                     </View>
@@ -127,7 +127,7 @@ class ChooseLogin extends Component {
                 }}
                 style={styles.btnSinhVien}
                 >
-                    <Image source={require('./image/buttonSinhVien.png')} />
+                    <Image source={require('./image/buttonSinhVien.png')} style= {{width:'100%',height:'100%',resizeMode:'contain'}} />
                 <View style={styles.absoluteViewBtnSinhVien}>
                     <Text style={styles.TextSinhVien}>Sinh viên</Text>
                 </View>

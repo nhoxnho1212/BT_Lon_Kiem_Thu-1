@@ -41,7 +41,7 @@ class Login extends Component {
             userName: '',
             password: '',
             Data: [],
-            isTeacher: false,
+            isTeacher: ChooseLogin.GetIsTeacher(),
             
         };
         if (ChooseLogin.GetIsTeacher() == true) {
