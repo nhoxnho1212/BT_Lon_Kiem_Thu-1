@@ -5,7 +5,7 @@ import HomeTeacher from './Screens/HomeTeacher';
 export default function App() {
   return (
     
-    // <Routes />
-    <HomeTeacher/>
+    <Routes />
+    // <HomeTeacher/>
   );
 }

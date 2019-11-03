@@ -1,129 +1,49 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity } from 'react-native';
-
-class HomeTeacher extends Component {
-    static navigationOptions = {
-        header: null
-    };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            AvatarDefault: './image/userAvatar.png'
-        }
-    }
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Alert, AsyncStorage, NativeModules, StatusBar, Image } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
+import { createStackNavigator } from 'react-navigation-stack';
+import Home from '../Components/Teacher/Home';
 
 
-    render() {
-        const styles = StyleSheet.create({
-            container: {
-                width: '100%',
-                height: '100%',
-                backgroundColor: '#E5E6E7',
-            },
-            header: {
-                position: 'absolute',
-                left: '0%',
-                right: '0%',
-                top: '0%',
-                bottom: '90.47%',
-                width: '100%',
-                height: 61,
-            },
-            buttonUser: {
-                position: 'absolute',
-                height: 38,
-                left: '78.06%',
-                right: '5%',
-                top: 10,
-                // backgroundColor: '#000000',
-            },
-            userAvatar: {
-                position: 'absolute',
-                height: 38,
-                width: 38,
-            },
-            PolygonShowButton: {
-                position: 'absolute',
-                height: 8,
-                right: 0,
-                top: 15,
-            },
-            buttonQuanLyLopHoc: {
-                position: 'absolute',
-                left: '11.11%',
-                right: '11.39%',
-                top: '37.97%',
-                bottom: '53.75%',
-            },
-            buttonThongKe: {
-                position: 'absolute',
-                left: '11.11%',
-                right: '11.39%',
-                top: '53.75%',
-                bottom: '37.97%',
-            },
-            absoluteViewBtnThongKe: {
-                flex: 1,
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                justifyContent: 'center',
-            },
-            TextThongKe: {
-                fontFamily: 'Roboto',
-                fontStyle: 'normal',
-                fontWeight: 'bold',
-                fontSize: 18,
-                lineHeight: 21,
-                textAlign: 'center',
-                color: '#488DF5',
-                display: 'flex',
+const DrawerNavigator = createDrawerNavigator({
+    //Drawer Optons and indexing
+    Home: {
+        //Title
+        screen: Home,
+        navigationOptions: {
+            drawerLabel: 'trang chủ',
+        },
 
-            },
-            TextQuanLyMonHoc: {
-                fontFamily: 'Roboto',
-                fontStyle: 'normal',
-                fontWeight: 'bold',
-                fontSize: 18,
-                lineHeight: 21,
-                textAlign: 'center',
-                color: '#FEF6F5',
-                display: 'flex',
+    },
 
-            },
-        })
-        return (
-            
-            <View style={styles.container}>
+},
 
-                <StatusBar hidden />
-                <Image source={require('./image/header.png')} style={styles.header} />
-
-                <TouchableOpacity style={styles.buttonUser} >
-                    <Image source={require('./image/userAvatar.png')} style={styles.userAvatar} />
-                    <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.buttonQuanLyLopHoc}>
-                    <Image source={require('./image/buttonQuanLyLopHoc.png')} style={{ height: '100%', width: '100%',resizeMode:'contain'}} />
-                    <View style={styles.absoluteViewBtnThongKe}>
-                        <Text style={styles.TextQuanLyMonHoc}>Quản lý môn học</Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.buttonThongKe}>
-                    <Image source={require('./image/buttonThongKe.png')} style={{ height: '100%', width: '100%' ,resizeMode:'contain'}} />
-                    <View style={styles.absoluteViewBtnThongKe}>
-                        <Text style={styles.TextThongKe}>Thống kê</Text>
-                    </View>
-                </TouchableOpacity>
-
+    {
+        contentComponent: (props) => (
+            <View style={{ flex: 1 }}>
+                <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+                    <DrawerNavigatorItems {...props} />
+                    <TouchableOpacity
+                        onPress={
+                            () => {
+                                AsyncStorage.clear();
+                                props.navigation.navigate('ChooseLogin')
+                            }
+                        }
+                    >
+                        <Text style={{ margin: 16, fontWeight: 'bold' }}>Đăng xuất</Text>
+                    </TouchableOpacity>
+                </SafeAreaView>
             </View>
-        );
-    }
-}
+        ),
+        drawerOpenRoute: 'DrawerOpen',
+        drawerCloseRoute: 'DrawerClose',
+        drawerToggleRoute: 'DrawerToggle',
+        drawerPosition: 'right'
+    });
 
 
 
-export default HomeTeacher;
+export default createAppContainer(DrawerNavigator);
+

@@ -16,6 +16,9 @@ const Project= createStackNavigator({
   },
   HomeTeacher: {
     screen: HomeTeacher,
+    navigationOptions : {
+      header: null
+    },
     
   },
   HomeStudent: {
