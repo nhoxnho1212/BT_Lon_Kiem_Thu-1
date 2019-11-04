@@ -110,8 +110,7 @@ class HomeTeacher extends Component {
                     <View style={styles.absoluteViewBtnThongKe}>
                         <Text style={styles.TextQuanLyMonHoc}>Quản lý môn học</Text>
                     </View>
-                </TouchableOpacity>
-
+                </TouchableOpacity>  
                 <TouchableOpacity style={styles.buttonThongKe}>
                     <Image source={require('./image/buttonThongKe.png')} style={{ height: '100%', width: '100%' ,resizeMode:'contain'}} />
                     <View style={styles.absoluteViewBtnThongKe}>

@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-n
 class ChooseLogin extends Component {
     static navigationOptions = {
         header: null
+        
     };
     constructor(props) {
         super(props);
