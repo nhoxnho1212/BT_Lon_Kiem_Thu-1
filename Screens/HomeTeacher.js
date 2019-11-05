@@ -4,20 +4,26 @@ import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
 import Home from '../Components/Teacher/Home';
+import ClassManager from '../Components/Teacher/ClassManager';
 
-
-const DrawerNavigator = createDrawerNavigator({
-    //Drawer Optons and indexing
-    Home: {
-        //Title
-        screen: Home,
-        navigationOptions: {
-            drawerLabel: 'trang chủ',
+const DrawerNavigator = createDrawerNavigator(
+    {
+        //Drawer Optons and indexing
+        Home: {
+            //Title
+            screen: Home,
+            navigationOptions: {
+                drawerLabel: 'trang chủ',
+            },
         },
+        ClassManager: {
+            screen: ClassManager,
+            navigationOptions: {
+                drawerLabel: 'quản lý lớp học',
+            }
+        }
 
     },
-
-},
 
     {
         contentComponent: (props) => (

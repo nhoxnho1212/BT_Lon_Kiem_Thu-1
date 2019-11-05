@@ -108,7 +108,7 @@ class Home extends Component {
                     <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonQuanLyLopHoc}>
+                <TouchableOpacity style={styles.buttonQuanLyLopHoc} onPress={()=>this.props.navigation.navigate('ClassManager')}>
                     <Image source={require('./image/buttonQuanLyLopHoc.png')} style={{ height: '100%', width: '100%',resizeMode:'contain'}} />
                     <View style={styles.absoluteViewBtnThongKe}>
                         <Text style={styles.TextQuanLyMonHoc}>Quản lý môn học</Text>
