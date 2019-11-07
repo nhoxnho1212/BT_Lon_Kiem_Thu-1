@@ -5,7 +5,8 @@ import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-dr
 import { createStackNavigator } from 'react-navigation-stack';
 import Home from '../Components/Teacher/Home';
 import ClassManager from '../Components/Teacher/ClassManager';
-
+import ClassManagerOwn from '../Components/Teacher/ClassManagerOwn';
+import StudentListView from '../Components/Teacher/StudentListView';
 const DrawerNavigator = createDrawerNavigator(
     {
         //Drawer Optons and indexing
@@ -20,6 +21,18 @@ const DrawerNavigator = createDrawerNavigator(
             screen: ClassManager,
             navigationOptions: {
                 drawerLabel: 'quản lý lớp học',
+            }
+        },
+        ClassManagerOwn: {
+            screen:ClassManagerOwn,
+            navigationOptions: {
+                drawerLabel: ()=> null,
+            }
+        }, 
+        StudentListView: {
+            screen: StudentListView,
+            navigationOptions: {
+                drawerLabel: ()=> null,
             }
         }
 

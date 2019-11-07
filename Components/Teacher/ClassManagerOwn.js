@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, Button } from 'react-native';
+import React, { Component, useState } from 'react';
 import HomeTeacher from '../../Screens/HomeTeacher';
 
 class Home extends Component {
@@ -35,6 +35,13 @@ class Home extends Component {
                 width: '100%',
                 height: 61,
             },
+            ButtonGoBack: {
+                position: 'absolute',
+                left: '4.17%',
+                right: '86.11%',
+                top: '2.81%',
+                bottom: '93.59%',
+            },
             buttonUser: {
                 position: 'absolute',
                 height: 38,
@@ -54,58 +61,34 @@ class Home extends Component {
                 right: 0,
                 top: 15,
             },
-            BackgroundScollView: {
+            ButtonDanhSachSinhVien: {
                 position: 'absolute',
-                left: '5.56%',
-                right: '5.56%',
-                top: '15.62%',
-                bottom: '4.38%',
+                left: '11.11%',
+                right: '11.39%',
+                top: '37.97%',
+                bottom: '53.75%',
 
-                backgroundColor: '#FEF6F5',
-            },
-            BackgroundScollView_header: {
-                position: 'absolute',
                 flex: 1,
-                width: '100%',
-                top: '0%',
-                bottom: '89.0625%',
+
+                borderRadius: 12,
+                backgroundColor: '#FBF3F3',
+                shadowColor: 'rgba(0, 0, 0, 0.1)',
+                shadowOpacity: 0.1,
+                elevation: 6,
+                shadowRadius: 15,
+                shadowOffset: { width: 1, height: 13 },
                 justifyContent: 'center',
-                backgroundColor: '#D4D4D4',
             },
-            BackgroundScollView_text: {
-                fontFamily: 'Roboto',
-                fontStyle: 'normal',
-                fontWeight: 'bold',
-                fontSize: 18,
-                lineHeight: 21,
-                textAlign: 'center',
-                color: '#18191C',
-                display: 'flex',
-
-            },
-            ScollViewArea: {
+            ButtonDiemDanh: {
                 position: 'absolute',
-                // flex: 1,
-                width: '100%',
-                // top: '0%',
-                top: '10.9375%',
-                bottom: '0%',
-                // backgroundColor: '#0f0',
-            },
-            ButtonComponent_View: {
-                width: '80%',
-                left: '10%',
-                height: 70,
+                left: '11.11%',
+                right: '11.39%',
+                top: '53.75%',
+                bottom: '37.97%',
 
                 flex: 1,
 
-                marginBottom: '10%',
-                marginTop: '10%',
-
-                // paddingTop: 5,
-                // paddingBottom: 5,
-                // paddingLeft: 50,
-                // paddingRight: 50,
+                borderRadius: 12,
                 backgroundColor: '#FBF3F3',
                 shadowColor: 'rgba(0, 0, 0, 0.1)',
                 shadowOpacity: 0.1,
@@ -117,63 +100,45 @@ class Home extends Component {
 
             ButtonComponent_Text: {
                 position: 'absolute',
-                // width: '100%',
+                width: '100%',
                 // height: '100%',
-                // top: 20,
                 fontFamily: 'Roboto',
                 fontStyle: 'normal',
                 fontWeight: 'bold',
-                fontSize: 13,   
-                lineHeight: 15,
+                fontSize: 18,
+                lineHeight: 21,
                 display: 'flex',
+                textAlign: 'center',
                 alignItems: 'center',
-                left:'28%',
-                right:'6.57%',
                 // backgroundColor:'#f00',
+                color: '#488DF5',
 
             }
 
         })
-        drawbutton = () => {
-            let table = []
-            for (let i = 0; i < 10; i++) {
-                table.push(
-                    <TouchableOpacity style={styles.ButtonComponent_View} onPress={()=>this.props.navigation.navigate('ClassManagerOwn')}>
-                        <Text style={styles.ButtonComponent_Text} >ITEC301 - cơ sở dữ liệu nâng cao {i}</Text>
-                        <Image source={require('./image/eduIcon.png')} style={{width:'20.51%',top:35,left:'1.73%'}}/>
-                    </TouchableOpacity>
-                )
 
-            }
-            return table;
-        };
         return (
 
             <View style={styles.container}>
 
                 <StatusBar hidden />
                 <Image source={require('./image/header.png')} style={styles.header} />
-
+                <TouchableOpacity style={styles.ButtonGoBack} onPress={()=>{this.props.navigation.navigate('ClassManager')}}>
+                    <Image source={require('./image/backIcon.png')} style={{width:'100%',height:'100%',resizeMode:'contain'}} />
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.buttonUser} onPress={this.toggleDrawer} >
                     <Image source={require('./image/userAvatar.png')} style={styles.userAvatar} />
                     <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
                 </TouchableOpacity>
 
-                <View style={styles.BackgroundScollView} >
-                    <View style={styles.BackgroundScollView_header}>
-                        <Text style={styles.BackgroundScollView_text}>Danh sách lớp</Text>
-                    </View>
-                    <ScrollView style={styles.ScollViewArea}>
-                        <View style={{
-                            justifyContent: 'center',
-                            flex: 1,
+                <TouchableOpacity style={styles.ButtonDanhSachSinhVien} onPress={()=>{this.props.navigation.navigate('StudentListView')}}>
+                    <Text style={styles.ButtonComponent_Text} >danh sách sinh viên</Text>
+                </TouchableOpacity>
 
-                        }}>
-                            {drawbutton()}
+                <TouchableOpacity style={styles.ButtonDiemDanh}>
+                    <Text style={styles.ButtonComponent_Text} >điểm danh</Text>
+                </TouchableOpacity>
 
-                        </View>
-                    </ScrollView>
-                </View>
             </View>
         );
     }
