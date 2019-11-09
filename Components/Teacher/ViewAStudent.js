@@ -13,13 +13,10 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            UserImage: require('./image/UserImage.png')
         }
     }
-    
-    OnPress = () =>{
-        this.props.navigation.navigate('ViewAStudent');
-    }
+
 
     render() {
 
@@ -64,19 +61,77 @@ class Home extends Component {
                 right: 0,
                 top: 15,
             },
+            UserImage: {
+                position: 'absolute',
+                left: '9.17%',
+                right: '60.28%',
+                top: '18.28%',
+                bottom: '64.53%',
+            },
+            UserName: {
+                position: 'absolute',
+                left: '50%',
+                right: '0%',
+                top: '18.28%',
+                bottom: '77.03%',
+
+                fontFamily: 'Roboto',
+                fontStyle: 'normal',
+                fontWeight: 'bold',
+                fontSize: 14,
+                lineHeight: 16,
+                display: 'flex',
+                alignItems: 'center',
+
+                color: '#000000',
+            },
+            UserID: {
+                position: 'absolute',
+                left: '50%',
+                right: '0%',
+                top: '24.06%',
+                bottom: '71.88%',
+
+                fontFamily: 'Roboto',
+                fontStyle: 'normal',
+                fontWeight: 'bold',
+                fontSize: 14,
+                lineHeight: 16,
+                display: 'flex',
+                alignItems: 'center',
+
+                color: '#000000',
+            },
+            UserBirthDay: {
+                position: 'absolute',
+                left: '50%',
+                right: '0%',
+                top: '29.2%',
+                bottom: '66.72%',
+
+                fontFamily: 'Roboto',
+                fontStyle: 'normal',
+                fontWeight: 'bold',
+                fontSize: 14,
+                lineHeight: 16,
+                display: 'flex',
+                alignItems: 'center',
+
+                color: '#000000',
+            },
             BackgroundScollView: {
                 position: 'absolute',
                 left: '5.56%',
                 right: '5.56%',
-                top: '13.75%',
-                bottom: '17.81%',
+                top: '38.91%',
+                bottom: '13.91%',
 
                 backgroundColor: '#FEF6F5',
             },
-            ScollView_header_STT: {
+            ScollView_header_NgayHoc: {
                 position: 'absolute',
                 flex: 1,
-                width: '15.9375%',
+                width: '50%',
                 top: '0%',
                 height: Dimensions.get('screen').height * 4.0625 / 100,
                 justifyContent: 'center',
@@ -84,25 +139,13 @@ class Home extends Component {
                 // backgroundColor:'#f00',
                 borderRadius: 4,
             },
-            ScollView_header_HoVaTen: {
-                position: 'absolute',
-                flex: 1,
-                width: '74.6875%',
-                top: '0%',
-                left: '16.5625%',
-                height: Dimensions.get('screen').height * 4.0625 / 100,
-                justifyContent: 'center',
-                backgroundColor: '#C4C4C4',
-                // backgroundColor:'#f00',
-                borderRadius: 4,
 
-            },
             ScollView_IsChecked: {
                 position: 'absolute',
                 flex: 1,
-                width: '8.125%',
+                right: 0,
                 top: '0%',
-                left: '91.875%',
+                left: '50.55%',
                 height: Dimensions.get('screen').height * 4.0625 / 100,
                 justifyContent: 'center',
                 backgroundColor: '#C4C4C4',
@@ -125,7 +168,7 @@ class Home extends Component {
                 // flex: 1,
                 width: '100%',
                 // top: '0%',
-                top: '7%',
+                top: Dimensions.get('screen').height * 4.6875 / 100,
                 bottom: '0%',
                 // backgroundColor: '#0f0',
 
@@ -158,10 +201,10 @@ class Home extends Component {
                 // backgroundColor:'#f00',
 
             },
-            ScollView_component_STT: {
+            ScollView_component_NgayHoc: {
                 position: 'absolute',
                 flex: 1,
-                width: '15.9375%',
+                width: '50%',
                 top: '0%',
                 height: Dimensions.get('screen').height * 4.0625 / 100,
                 justifyContent: 'center',
@@ -169,25 +212,13 @@ class Home extends Component {
                 // backgroundColor:'#f00',
                 borderRadius: 4,
             },
-            ScollView_component_HoVaTen: {
-                position: 'absolute',
-                flex: 1,
-                width: '74.6875%',
-                top: '0%',
-                left: '16.5625%',
-                height: Dimensions.get('screen').height * 4.0625 / 100,
-                justifyContent: 'center',
-                backgroundColor: '#EAEAEA',
-                // backgroundColor:'#f00',
-                borderRadius: 4,
 
-            },
             ScollView_component_IsChecked: {
                 position: 'absolute',
                 flex: 1,
-                width: '8.125%',
+                right: 0,
                 top: '0%',
-                left: '91.875%',
+                left: '50.55%',
                 height: Dimensions.get('screen').height * 4.0625 / 100,
                 justifyContent: 'center',
                 backgroundColor: '#EAEAEA',
@@ -199,27 +230,21 @@ class Home extends Component {
 
         drawbutton = () => {
             let table = []
-            
+
             for (let i = 0; i < 20; i++) {
                 var styleIsChecked = StyleSheet.flatten([styles.ScollView_component_IsChecked])
-                if (i%2==0){
-                    styleIsChecked.backgroundColor='#488DF5';
+                if (i % 2 == 0) {
+                    styleIsChecked.backgroundColor = '#488DF5';
                 }
                 table.push(
-                    
-                    <TouchableOpacity style={styles.ButtonComponent_View} onPress={() =>{
-                        this.props.navigation.navigate('ViewAStudent');
-                    }}>
-                        <View style={styles.ScollView_component_STT}>
-                            <Text style={styles.BackgroundScollView_text}>{i+1}</Text>
-                        </View>
-                        <View style={styles.ScollView_component_HoVaTen}>
-                            <Text style={styles.BackgroundScollView_text}>Đỗ Nguyên Thanh Tùng</Text>
+
+                    <View style={styles.ButtonComponent_View} >
+                        <View style={styles.ScollView_component_NgayHoc}>
+                            <Text style={styles.BackgroundScollView_text}>{i + 1}-10-2019</Text>
                         </View>
                         <View style={styleIsChecked}>
-                            {/* <Text style={styles.BackgroundScollView_text}>Họ và tên</Text> */}
                         </View>
-                    </TouchableOpacity>
+                    </View>
                 )
 
             }
@@ -239,15 +264,16 @@ class Home extends Component {
                     <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
                 </TouchableOpacity>
 
+                <Image source={this.state.UserImage} style={styles.UserImage}></Image>
+                <Text style= {styles.UserName}>Do Nguyen Thanh Tung</Text>
+                <Text style= {styles.UserID}>1751010180</Text>
+                <Text style= {styles.UserBirthDay}>03-10-1999</Text>
                 <View style={styles.BackgroundScollView} >
-                    <View style={styles.ScollView_header_STT}>
-                        <Text style={styles.BackgroundScollView_text}>STT</Text>
+                    <View style={styles.ScollView_header_NgayHoc}>
+                        <Text style={styles.BackgroundScollView_text}>Ngày học</Text>
                     </View>
-                    <View style={styles.ScollView_header_HoVaTen}>
-                        <Text style={styles.BackgroundScollView_text}>Họ và tên</Text>
-                    </View>
+
                     <View style={styles.ScollView_IsChecked}>
-                        {/* <Text style={styles.BackgroundScollView_text}>Họ và tên</Text> */}
                     </View>
                     <ScrollView style={styles.ScollViewArea}>
                         <View style={{

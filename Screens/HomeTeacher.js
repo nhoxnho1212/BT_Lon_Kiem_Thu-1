@@ -7,6 +7,7 @@ import Home from '../Components/Teacher/Home';
 import ClassManager from '../Components/Teacher/ClassManager';
 import ClassManagerOwn from '../Components/Teacher/ClassManagerOwn';
 import StudentListView from '../Components/Teacher/StudentListView';
+import ViewAStudent from '../Components/Teacher/ViewAStudent';
 const DrawerNavigator = createDrawerNavigator(
     {
         //Drawer Optons and indexing
@@ -31,6 +32,12 @@ const DrawerNavigator = createDrawerNavigator(
         }, 
         StudentListView: {
             screen: StudentListView,
+            navigationOptions: {
+                drawerLabel: ()=> null,
+            }
+        },
+        ViewAStudent: {
+            screen: ViewAStudent,
             navigationOptions: {
                 drawerLabel: ()=> null,
             }
