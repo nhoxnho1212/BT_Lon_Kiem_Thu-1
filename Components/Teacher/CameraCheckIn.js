@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, Button, FlatList, Dimensions } from 'react-native';
 import React, { Component, useState } from 'react';
 import HomeTeacher from '../../Screens/HomeTeacher';
-
-class Home extends Component {
+import Camera from './camera/camera';
+class CameraCheckin extends Component {
     static navigationOptions = {
         header: null
     };
@@ -228,64 +228,20 @@ class Home extends Component {
 
         })
 
-        drawbutton = () => {
-            let table = []
-
-            for (let i = 0; i < 20; i++) {
-                var styleIsChecked = StyleSheet.flatten([styles.ScollView_component_IsChecked])
-                if (i % 2 == 0) {
-                    styleIsChecked.backgroundColor = '#488DF5';
-                }
-                table.push(
-
-                    <View style={styles.ButtonComponent_View} >
-                        <View style={styles.ScollView_component_NgayHoc}>
-                            <Text style={styles.BackgroundScollView_text}>{i + 1}-10-2019</Text>
-                        </View>
-                        <View style={styleIsChecked}>
-                        </View>
-                    </View>
-                )
-
-            }
-            return table;
-        };
         return (
 
             <View style={styles.container}>
 
                 <StatusBar hidden />
                 <Image source={require('./image/header.png')} style={styles.header} />
-                <TouchableOpacity style={styles.ButtonGoBack} onPress={() => { this.props.navigation.navigate('StudentListView') }}>
+                <TouchableOpacity style={styles.ButtonGoBack} onPress={() => { this.props.navigation.navigate('ClassManagerOwn') }}>
                     <Image source={require('./image/backIcon.png')} style={{ width: '100%', height: '100%', resizeMode: 'contain' }} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.buttonUser} onPress={this.toggleDrawer} >
                     <Image source={require('./image/userAvatar.png')} style={styles.userAvatar} />
                     <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
                 </TouchableOpacity>
-
-                <Image source={this.state.UserImage} style={styles.UserImage}></Image>
-                <Text style= {styles.UserName}>Do Nguyen Thanh Tung</Text>
-                <Text style= {styles.UserID}>1751010180</Text>
-                <Text style= {styles.UserBirthDay}>03-10-1999</Text>
-                <View style={styles.BackgroundScollView} >
-                    <View style={styles.ScollView_header_NgayHoc}>
-                        <Text style={styles.BackgroundScollView_text}>Ngày học</Text>
-                    </View>
-
-                    <View style={styles.ScollView_IsChecked}>
-                    </View>
-                    <ScrollView style={styles.ScollViewArea}>
-                        <View style={{
-                            justifyContent: 'center',
-                            flex: 1,
-
-                        }}>
-                            {drawbutton()}
-
-                        </View>
-                    </ScrollView>
-                </View>
+                <Camera/>
 
             </View>
         );
@@ -294,4 +250,4 @@ class Home extends Component {
 
 
 
-export default Home;
+export default CameraCheckin;

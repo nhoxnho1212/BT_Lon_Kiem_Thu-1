@@ -135,7 +135,7 @@ class Home extends Component {
                     <Text style={styles.ButtonComponent_Text} >danh sách sinh viên</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.ButtonDiemDanh}>
+                <TouchableOpacity style={styles.ButtonDiemDanh} onPress={()=>{this.props.navigation.navigate('CameraCheckIn')}}>
                     <Text style={styles.ButtonComponent_Text} >điểm danh</Text>
                 </TouchableOpacity>
 

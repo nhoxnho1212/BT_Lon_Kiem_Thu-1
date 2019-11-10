@@ -8,6 +8,7 @@ import ClassManager from '../Components/Teacher/ClassManager';
 import ClassManagerOwn from '../Components/Teacher/ClassManagerOwn';
 import StudentListView from '../Components/Teacher/StudentListView';
 import ViewAStudent from '../Components/Teacher/ViewAStudent';
+import CameraCheckIn from '../Components/Teacher/CameraCheckIn';
 const DrawerNavigator = createDrawerNavigator(
     {
         //Drawer Optons and indexing
@@ -38,6 +39,12 @@ const DrawerNavigator = createDrawerNavigator(
         },
         ViewAStudent: {
             screen: ViewAStudent,
+            navigationOptions: {
+                drawerLabel: ()=> null,
+            }
+        },
+        CameraCheckIn: {
+            screen: CameraCheckIn,
             navigationOptions: {
                 drawerLabel: ()=> null,
             }
