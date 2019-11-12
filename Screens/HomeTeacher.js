@@ -9,6 +9,7 @@ import ClassManagerOwn from '../Components/Teacher/ClassManagerOwn';
 import StudentListView from '../Components/Teacher/StudentListView';
 import ViewAStudent from '../Components/Teacher/ViewAStudent';
 import CameraCheckIn from '../Components/Teacher/CameraCheckIn';
+
 const DrawerNavigator = createDrawerNavigator(
     {
         //Drawer Optons and indexing

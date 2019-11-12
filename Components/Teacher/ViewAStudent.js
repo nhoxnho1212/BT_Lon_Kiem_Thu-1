@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, Button, FlatList, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, Button, FlatList, Dimensions,ActivityIndicator } from 'react-native';
 import React, { Component, useState } from 'react';
 import HomeTeacher from '../../Screens/HomeTeacher';
+
 
 class Home extends Component {
     static navigationOptions = {
@@ -13,7 +14,8 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            UserImage: require('./image/UserImage.png')
+            UserImage: require('./image/UserImage.png'),
+            data: ';',
         }
     }
 

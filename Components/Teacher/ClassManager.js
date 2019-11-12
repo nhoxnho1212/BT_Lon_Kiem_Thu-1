@@ -1,7 +1,9 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, Button,ActivityIndicator,Alert } from 'react-native';
 import HomeTeacher from '../../Screens/HomeTeacher';
-
+import Login from '../../Screens/Login';
+import {GetInfoClass} from '../../Networking/Server';
+import StudentListView from './StudentListView';
 class Home extends Component {
     static navigationOptions = {
         header: null
@@ -12,13 +14,47 @@ class Home extends Component {
     };
     constructor(props) {
         super(props);
+        global.AClass=[];
+        global.ClassID='';
         this.state = {
-            // AvatarDefault: './image/userAvatar.png'
+            // AvatarDefault: './image/userAvatar.png',
+            isLoading:false,
         }
     }
+    static GetAClass() {
+        return global.AClass;
+    }
 
+    static GetClassID() {
+        return global.ClassID;
+    }
 
+    async OnPress(id) {
+        this.setState({isLoading:true});
+        let GetClassFromServer = await GetInfoClass(id);
+        this.setState({isLoading:false});
+
+        if (GetClassFromServer.status == -1){
+            Alert.alert('', 'Không thể kết nối với máy chủ');
+            return {};
+        } else {
+            global.AClass = GetClassFromServer.data;
+            global.ClassID = id;
+            return (this.props.navigation.navigate('ClassManagerOwn'));
+        }
+        
+        
+    }
+    
     render() {
+
+        if(this.state.isLoading){
+            return(
+              <View style={{flex: 1, justifyContent:'center'}}>
+                <ActivityIndicator/>
+              </View>
+            )
+          }
 
         const styles = StyleSheet.create({
             container: {
@@ -136,11 +172,13 @@ class Home extends Component {
         })
         drawbutton = () => {
             let table = []
-            for (let i = 0; i < 10; i++) {
+            let Classes=Login.GetClasses();
+            
+            for (let i in Classes) {
                 table.push(
-                    <TouchableOpacity style={styles.ButtonComponent_View} onPress={()=>this.props.navigation.navigate('ClassManagerOwn')}>
-                        <Text style={styles.ButtonComponent_Text} >ITEC301 - cơ sở dữ liệu nâng cao {i}</Text>
-                        <Image source={require('./image/eduIcon.png')} style={{width:'20.51%',top:35,left:'1.73%'}}/>
+                    <TouchableOpacity style={styles.ButtonComponent_View} onPress={this.OnPress.bind(this,Classes[i].id)}>
+                        <Text style={styles.ButtonComponent_Text} >{Classes[i].id} - {Classes[i].name} </Text>
+                        <Image source={require('./image/eduIcon.png')} style={{position:'absolute',width:'20.51%',top:'20%',left:'1.73%'}}/>
                     </TouchableOpacity>
                 )
 

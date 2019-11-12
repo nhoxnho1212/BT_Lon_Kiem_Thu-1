@@ -1,27 +1,7 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, Alert} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, Alert,ActivityIndicator } from 'react-native';
 import ChooseLogin from './chooseTypeLogin';
-
-//connect firebase
-import * as firebase from 'firebase';
-import firestore from 'firebase/firestore'
-import { database } from 'firebase/database';
-
-
-//config firebase
-const config = {
-    apiKey: "AIzaSyD38d0u1HW2Q0yZCtYf_YxRwyU_oW3lddE",
-    //   authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "https://appcheckinwithfacerecognition.firebaseio.com",
-    projectId: "appcheckinwithfacerecognition",
-    storageBucket: "appcheckinwithfacerecognition.appspot.com",
-    messagingSenderId: "514119668858"
-};
-firebase.initializeApp(config);
-
-// -------------------------------------------------
-
-
+import { CheckLoginTeacherFromServer } from '../Networking/Server'
 
 class Login extends Component {
     static navigationOptions = {
@@ -29,20 +9,21 @@ class Login extends Component {
         header: null,
         left: null,
         gesturesEnabled: false,
+        isLoading:false,
     };
     countTime = 0;
     pathDB = '';
     component = this;
-    
+
     constructor(props) {
         super(props);
-
+        global.Classes=[];
         this.state = {
             userName: '',
             password: '',
             Data: [],
             isTeacher: ChooseLogin.GetIsTeacher(),
-            
+
         };
         if (ChooseLogin.GetIsTeacher() == true) {
             this.pathDB = 'Users/Teachers/';
@@ -51,100 +32,46 @@ class Login extends Component {
             this.pathDB = 'Users/Students/';
         }
 
-        this.LoadFireBase();
-        this.LoadFireBase();
     }
-    ObjectToArr(Obj) {
-        const result = Object.keys(Obj).map(key => ({ [key]: Obj[key] }));
-        return result;
+    static GetClasses() {
+        return global.Classes;
     }
 
-    static isValidAccount = false;
-    checkUser(UserName, Password) {
-        // async () => {
-            try {
-                //load data
-                // if (this.state.Data.length == 0) {
-                //     this.loadDataFromLocalStorage();
-                // }
-                let isCheckAcc = false;
-                
-                this.ObjectToArr(this.state.Data).map((item, key) => {
-                    if ((UserName == item[key].userName) && (Password == item[key].password)) {
-                        isCheckAcc = true;
-                    } else {
-
-                    }
-                    
-
-                });
-                this.isValidAccount = isCheckAcc
-
-                if (isCheckAcc == false) {
-
-                    Alert.alert('', 'sai tên đăng nhập hoặc mật khẩu!');
-                }
-
-            }
-            catch {
-                
-                Alert.alert('', 'load Data fail!');
-            }
-        // }
-    }
-
-    LoadFireBase() {
-        var connectedRef = firebase.database().ref(".info/connected");
-            connectedRef.on("value", function (snap) {
-                if (snap.val() === true) {
-                    console.log("connected");
-                    firebase.database().ref(this.pathDB).once('value', function (snapshot) {
-                        this.setState({ Data: snapshot.toJSON() });
-                    }.bind(this)).then(() => {
-                        this.countTime += 1;
-                        console.log('GETTED ' + this.pathDB + ' ! ' + this.countTime);
-
-                    }).catch((error) => {
-                        console.log(error.message);
-
-                    });
-
-                } else {
-                    // alert("not connected");
-                    console.log("not connected");
-
-                }
-            }.bind(this));
-
-    }
-
-    ReadDatabase() {
-        GetDataUserFormFB = setTimeout(function () {
-            this.LoadFireBase();
-        }.bind(this), 1000 * 60*5) //set time to load database from firebase:  1 minutes
-
-    }
-
-    onPress = () => {
-
-        this.checkUser(this.state.userName, this.state.password);
-
-        if (this.isValidAccount) {
-            clearTimeout(GetDataUserFormFB);
+    onPress = async () => {
+        this.setState({isLoading:true});
+        let checkValidAccout = await CheckLoginTeacherFromServer(this.state.userName, this.state.password)
+        this.setState({isLoading:false});
+        if (checkValidAccout.status == 1) {
             if (this.state.isTeacher) {
+                global.Classes=checkValidAccout.data;
                 return (this.props.navigation.navigate('HomeTeacher'));
             }
             else {
                 return this.props.navigation.navigate('HomeStudent');
             }
         } else {
+            if (checkValidAccout.status == 0) {
+                Alert.alert('', 'Sai tên đặng nhập hoặc mật khẩu');
+            }
+            if (checkValidAccout.status == -1) {
+                Alert.alert('', 'Không thể kết nối với máy chủ');
+            }
             return {};
         }
+
+
+
     }
 
 
     render() {
-
+        if(this.state.isLoading){
+            return(
+              <View style={{flex: 1, justifyContent:'center'}}>
+                <ActivityIndicator/>
+              </View>
+            )
+          }
         const styles = StyleSheet.create({
             container: {
                 width: '100%',
@@ -286,7 +213,6 @@ class Login extends Component {
                 fontWeight: 'bold',
             }
         });
-        this.ReadDatabase();
         return (
             <KeyboardAvoidingView behavior='position' >
                 <View style={styles.container}>
@@ -323,7 +249,6 @@ class Login extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => {
-                        clearTimeout(GetDataUserFormFB);
                         this.props.navigation.goBack();
                     }}
                         style={styles.btnTroVe}

@@ -2,10 +2,6 @@
 
 ## Install module before  built  this app
 
-npm install --save firebase
-
-npm install --save firebase-admin
-
 npm install --save react-navigation
 
 npm install --save react-native-gesture-handler

@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, Button, FlatList, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, Button, FlatList, Dimensions,ActivityIndicator } from 'react-native';
 import React, { Component, useState } from 'react';
 import HomeTeacher from '../../Screens/HomeTeacher';
-
+import { NavigationEvents } from "react-navigation";
+import ClassManager from './ClassManager';
+import {GetInfoAStudent} from '../../Networking/Server';
 class Home extends Component {
     static navigationOptions = {
-        header: null
+        header: null,
     };
     toggleDrawer = () => {
         //Props to open/close the drawer
@@ -13,15 +15,37 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            data: ClassManager.GetAClass(),
+            isUpdate: true,
+            isLoading:false,
+        }
 
+    }
+
+    OnPress = async (studentID) => {
+        this.setState({isLoading:true});
+        let GetInfoAStudentFromServer = await GetInfoAStudent(ClassManager.GetClassID(),studentID);
+        this.setState({isLoading:false});
+        if (GetInfoAStudentFromServer.status ==-1 ){
+            Alert.alert('', 'Không thể kết nối với máy chủ');
+            return {};
+        } else {
+
+            this.props.navigation.navigate('ViewAStudent');
         }
     }
-    
-    OnPress = () =>{
-        this.props.navigation.navigate('ViewAStudent');
-    }
+
+
 
     render() {
+
+        if(this.state.isLoading){
+            return(
+              <View style={{flex: 1, justifyContent:'center'}}>
+                <ActivityIndicator/>
+              </View>
+            )
+          }
 
         var styles = StyleSheet.create({
             container: {
@@ -199,28 +223,29 @@ class Home extends Component {
 
         drawbutton = () => {
             let table = []
-            
-            for (let i = 0; i < 20; i++) {
+            let counter = 0;
+            let listStudent = this.state.data;
+
+            for (let i in listStudent) {
                 var styleIsChecked = StyleSheet.flatten([styles.ScollView_component_IsChecked])
-                if (i%2==0){
-                    styleIsChecked.backgroundColor='#488DF5';
+                if (i % 2 == 0) {
+                    styleIsChecked.backgroundColor = '#488DF5';
                 }
                 table.push(
-                    
-                    <TouchableOpacity style={styles.ButtonComponent_View} onPress={() =>{
-                        this.props.navigation.navigate('ViewAStudent');
-                    }}>
+
+                    <TouchableOpacity style={styles.ButtonComponent_View} onPress={this.OnPress.bind(this,listStudent[i].id)}>
                         <View style={styles.ScollView_component_STT}>
-                            <Text style={styles.BackgroundScollView_text}>{i+1}</Text>
+                            <Text style={styles.BackgroundScollView_text}>{counter + 1}</Text>
                         </View>
                         <View style={styles.ScollView_component_HoVaTen}>
-                            <Text style={styles.BackgroundScollView_text}>Đỗ Nguyên Thanh Tùng</Text>
+                            <Text style={styles.BackgroundScollView_text}>{listStudent[i].name}</Text>
                         </View>
                         <View style={styleIsChecked}>
                             {/* <Text style={styles.BackgroundScollView_text}>Họ và tên</Text> */}
                         </View>
                     </TouchableOpacity>
                 )
+                counter += 1;
 
             }
             return table;
@@ -228,14 +253,17 @@ class Home extends Component {
         return (
 
             <View style={styles.container}>
-
+                <NavigationEvents
+                    onWillFocus={() => {
+                        this.setState({data:ClassManager.GetAClass()});
+                     }} />
                 <StatusBar hidden />
                 <Image source={require('./image/header.png')} style={styles.header} />
                 <TouchableOpacity style={styles.ButtonGoBack} onPress={() => { this.props.navigation.navigate('ClassManagerOwn') }}>
                     <Image source={require('./image/backIcon.png')} style={{ width: '100%', height: '100%', resizeMode: 'contain' }} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.buttonUser} onPress={this.toggleDrawer} >
-                    <Image source={require('./image/userAvatar.png')} style={styles.userAvatar} />
+                    <Image source= {require('./image/userAvatar.png')} style={styles.userAvatar} />
                     <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
                 </TouchableOpacity>
 
@@ -255,6 +283,7 @@ class Home extends Component {
                             flex: 1,
 
                         }}>
+
                             {drawbutton()}
 
                         </View>
