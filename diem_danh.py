@@ -1,7 +1,5 @@
-from numpy import asarray as np
 from face_recognition import compare_faces
 from face_recognition import face_encodings
-from face_recognition import load_image_file
 import diem_danh
 def diem_danh(input_face, stored_face):
     try:
