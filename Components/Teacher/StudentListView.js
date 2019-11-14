@@ -19,13 +19,27 @@ class Home extends Component {
             isUpdate: true,
             isLoading:false,
         }
-
+        global.infoAStudentCheckin=[];
+        global.infoAStudent={};
     }
 
-    OnPress = async (studentID) => {
+    static GetInfoAStudentCheckin= ()=>{
+        return global.infoAStudentCheckin;
+    }
+    
+    static GetInfoAStudent= () => {
+        return global.infoAStudent;
+    }
+
+    OnPress = async (studentID,studentName) => {
         this.setState({isLoading:true});
         let GetInfoAStudentFromServer = await GetInfoAStudent(ClassManager.GetClassID(),studentID);
         this.setState({isLoading:false});
+        global.infoAStudentCheckin = GetInfoAStudentFromServer.data;
+        global.infoAStudent= {
+            id: studentID,
+            name: studentName,
+        }
         if (GetInfoAStudentFromServer.status ==-1 ){
             Alert.alert('', 'Không thể kết nối với máy chủ');
             return {};
@@ -233,7 +247,7 @@ class Home extends Component {
                 }
                 table.push(
 
-                    <TouchableOpacity style={styles.ButtonComponent_View} onPress={this.OnPress.bind(this,listStudent[i].id)}>
+                    <TouchableOpacity style={styles.ButtonComponent_View} onPress={this.OnPress.bind(this,listStudent[i].id,listStudent[i].name)}>
                         <View style={styles.ScollView_component_STT}>
                             <Text style={styles.BackgroundScollView_text}>{counter + 1}</Text>
                         </View>
@@ -241,7 +255,6 @@ class Home extends Component {
                             <Text style={styles.BackgroundScollView_text}>{listStudent[i].name}</Text>
                         </View>
                         <View style={styleIsChecked}>
-                            {/* <Text style={styles.BackgroundScollView_text}>Họ và tên</Text> */}
                         </View>
                     </TouchableOpacity>
                 )

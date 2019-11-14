@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { formData} from 'react-native'
-const api = 'http://10.246.129.180:5000';
+import { formData } from 'react-native'
+const api = 'http://10.246.133.180:5000';
 
-const apiCheckLoginTeacher = api+'/CheckLoginTeacher';
-const apiGetInfoAClass =api+'/GetInfoAClass';
-const apiGetInfoAStudent = api+'/GetInfoAStudent';
+const apiCheckLoginTeacher = api + '/CheckLoginTeacher';
+const apiGetInfoAClass = api + '/GetInfoAClass';
+const apiGetInfoAStudent = api + '/GetInfoAStudent';
+const apiCheckin = api + '/diem_danh';
 
 async function CheckLoginTeacherFromServer(username, password) {
     let responseFromServer = {
-        isloading:true,
+        isloading: true,
         status: -1,
         data: [],
     }
     let formData = new FormData()
-     formData.append('username', username);
-     formData.append('password', password);
-    await fetch(apiCheckLoginTeacher, { 
+    formData.append('username', username);
+    formData.append('password', password);
+    await fetch(apiCheckLoginTeacher, {
         method: 'POST',
         headers: {
             'content-Type': 'multipart/form-data',
@@ -23,7 +24,7 @@ async function CheckLoginTeacherFromServer(username, password) {
         body: formData
     })
         .then((response) => response.json())
-        .then((responseJson)=> {
+        .then((responseJson) => {
             responseFromServer.status = responseJson.status;
             responseFromServer.data = responseJson.data;
             return responseFromServer;
@@ -41,7 +42,7 @@ async function GetInfoClass(id) {
         data: [],
     }
     let formData = new FormData()
-     formData.append('id', id);
+    formData.append('id', id);
 
     await fetch(apiGetInfoAClass, {
         method: 'POST',
@@ -51,7 +52,7 @@ async function GetInfoClass(id) {
         body: formData
     })
         .then((response) => response.json())
-        .then((responseJson)=> {
+        .then((responseJson) => {
             responseFromServer.status = responseJson.status;
             responseFromServer.data = responseJson.data;
             return responseFromServer;
@@ -62,14 +63,15 @@ async function GetInfoClass(id) {
         });
     return responseFromServer;
 }
-async function GetInfoAStudent(ClassID,StudentID) {
+
+async function GetInfoAStudent(ClassID, StudentID) {
     let responseFromServer = {
         status: -1,
         data: [],
     }
     let formData = new FormData()
-     formData.append('classID', ClassID);
-     formData.append('studentID', StudentID);
+    formData.append('classID', ClassID);
+    formData.append('studentID', StudentID);
 
     await fetch(apiGetInfoAStudent, {
         method: 'POST',
@@ -79,7 +81,41 @@ async function GetInfoAStudent(ClassID,StudentID) {
         body: formData
     })
         .then((response) => response.json())
-        .then((responseJson)=> {
+        .then((responseJson) => {
+            responseFromServer.status = responseJson.status;
+            responseFromServer.data = responseJson.data;
+            return responseFromServer;
+        })
+        .catch((error) => {
+            console.log(error);
+            return responseFromServer;
+        });
+    return responseFromServer;
+}
+async function Checkin(ClassID, image, date) {
+    let responseFromServer = {
+        status: -1,
+        data: [],
+    }
+    let formData = new FormData()
+    await formData.append('classId', ClassID);
+
+    let localUri = image.uri;
+    let filename = localUri.split('/').pop();
+
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+    await formData.append('image', { uri: localUri, name: filename, type });
+    await formData.append('date', date);
+    await fetch(apiCheckin, {
+        method: 'POST',
+        headers: {
+            'content-Type': 'multipart/form-data',
+        },
+        body: formData
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
             responseFromServer.status = responseJson.status;
             responseFromServer.data = responseJson.data;
             return responseFromServer;
@@ -93,6 +129,9 @@ async function GetInfoAStudent(ClassID,StudentID) {
 
 
 
-export {GetInfoAStudent};
-export {CheckLoginTeacherFromServer};
-export {GetInfoClass};
+
+
+export { GetInfoAStudent };
+export { CheckLoginTeacherFromServer };
+export { GetInfoClass };
+export { Checkin };

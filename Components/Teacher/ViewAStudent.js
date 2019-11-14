@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, Button, FlatList, Dimensions,ActivityIndicator } from 'react-native';
 import React, { Component, useState } from 'react';
 import HomeTeacher from '../../Screens/HomeTeacher';
-
-
+import StudentListView from './StudentListView';
+import { NavigationEvents } from "react-navigation";
 class Home extends Component {
     static navigationOptions = {
         header: null
@@ -15,7 +15,8 @@ class Home extends Component {
         super(props);
         this.state = {
             UserImage: require('./image/UserImage.png'),
-            data: ';',
+            ListInfoCheckin: StudentListView.GetInfoAStudentCheckin(),
+            infoAStudent:StudentListView.GetInfoAStudent(),
         }
     }
 
@@ -232,17 +233,17 @@ class Home extends Component {
 
         drawbutton = () => {
             let table = []
-
-            for (let i = 0; i < 20; i++) {
+            let ListInfoCheckin = this.state.ListInfoCheckin;
+            for (let i in ListInfoCheckin) {
                 var styleIsChecked = StyleSheet.flatten([styles.ScollView_component_IsChecked])
-                if (i % 2 == 0) {
+                if (ListInfoCheckin[i].status == 1) {
                     styleIsChecked.backgroundColor = '#488DF5';
                 }
                 table.push(
 
                     <View style={styles.ButtonComponent_View} >
                         <View style={styles.ScollView_component_NgayHoc}>
-                            <Text style={styles.BackgroundScollView_text}>{i + 1}-10-2019</Text>
+                            <Text style={styles.BackgroundScollView_text}>{ListInfoCheckin[i].date}</Text>
                         </View>
                         <View style={styleIsChecked}>
                         </View>
@@ -255,7 +256,11 @@ class Home extends Component {
         return (
 
             <View style={styles.container}>
-
+                <NavigationEvents
+                    onWillFocus={() => {
+                        this.setState({ListInfoCheckin:StudentListView.GetInfoAStudentCheckin()});
+                        this.setState({infoAStudent:StudentListView.GetInfoAStudent()});
+                     }} />
                 <StatusBar hidden />
                 <Image source={require('./image/header.png')} style={styles.header} />
                 <TouchableOpacity style={styles.ButtonGoBack} onPress={() => { this.props.navigation.navigate('StudentListView') }}>
@@ -267,8 +272,8 @@ class Home extends Component {
                 </TouchableOpacity>
 
                 <Image source={this.state.UserImage} style={styles.UserImage}></Image>
-                <Text style= {styles.UserName}>Do Nguyen Thanh Tung</Text>
-                <Text style= {styles.UserID}>1751010180</Text>
+                <Text style= {styles.UserName}>{this.state.infoAStudent.name}</Text>
+                <Text style= {styles.UserID}>{this.state.infoAStudent.id}</Text>
                 <Text style= {styles.UserBirthDay}>03-10-1999</Text>
                 <View style={styles.BackgroundScollView} >
                     <View style={styles.ScollView_header_NgayHoc}>

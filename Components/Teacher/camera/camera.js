@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator,Alert } from 'react-native';
 import { Camera } from 'expo-camera';
 import { NavigationEvents } from 'react-navigation';
 import * as Permissions from 'expo-permissions';
 import styles from './style';
 import Toolbar from './toolbar';
 import Gallery from './gallery';
-
+import { Checkin } from '../../../Networking/Server';
+import ClassManager from '../ClassManager';
 export default class CameraPage extends React.Component {
   camera = null;
 
@@ -17,6 +18,7 @@ export default class CameraPage extends React.Component {
     cameraType: Camera.Constants.Type.back,
     flashMode: Camera.Constants.FlashMode.off,
     loaded: true,
+    isloading: false,
   };
 
   setFlashMode = (flashMode) => this.setState({ flashMode });
@@ -30,9 +32,35 @@ export default class CameraPage extends React.Component {
 
   handleShortCapture = async () => {
     const photoData = await this.camera.takePictureAsync();
-    this.setState({ capturing: false, captures: [photoData, ...this.state.captures] })
-  };
+    this.setState({ capturing: false, captures: [photoData] })
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
 
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+    var today = dd + '-' + mm + '-' + yyyy;
+    this.setState({ isloading: true });
+    let req = await Checkin(ClassManager.GetClassID(), photoData, '27-10-2019');
+    this.setState({ isloading: false });
+    console.log(req.status);
+    if (req.status == -1) {
+      Alert.alert('', 'Không thể kết nối với máy chủ');
+    }else {
+      if (req.status == 0){
+        Alert.alert('','điểm danh thật bại');
+      }else {
+        if (req.status == 1) {
+          Alert.alert('','điểm danh thành công cho sinh viên: '+req.data);
+        }
+      }
+    }
+  };
 
   async componentDidMount() {
     const camera = await Permissions.askAsync(Permissions.CAMERA);
@@ -43,8 +71,30 @@ export default class CameraPage extends React.Component {
   };
 
   render() {
+
+
     const { hasCameraPermission, flashMode, cameraType, capturing, captures } = this.state;
     const loaded = this.state.loaded;
+    if (this.state.isloading){
+      return(
+        <View style={{flex: 1, justifyContent:'center'}}>
+          <ActivityIndicator/>
+          <Text style= {
+            {
+              fontFamily: 'Roboto',
+              fontStyle: 'normal',
+              fontWeight: 'bold',
+              fontSize: 18,
+              lineHeight: 21,
+              textAlign: 'center',
+              color: '#488DF5',
+              display: 'flex',
+              width:'100%',
+            }
+          }>Đang điểm danh</Text>
+        </View>
+      )
+    }
     if (hasCameraPermission === null) {
       return <View />;
     } else if (hasCameraPermission === false) {
@@ -57,9 +107,9 @@ export default class CameraPage extends React.Component {
           <NavigationEvents
             onWillFocus={payload => this.setState({ loaded: true })}
             onDidBlur={payload => {
-              this.setState({captures:[]});
+              this.setState({ captures: [] });
               this.setState({ loaded: false });
-              } }/>
+            }} />
           {loaded && (
             <Camera
               type={cameraType}
