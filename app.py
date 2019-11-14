@@ -1,5 +1,4 @@
 from flask import Flask,  flash, request, redirect, url_for
-# from flask_pymongo import PyMongo
 from pymongo import MongoClient
 from bson.json_util import dumps
 from werkzeug.utils import secure_filename
@@ -179,7 +178,6 @@ def diem_danh():
     try:
         data = request.form.to_dict()
         classId = data["classId"]
-        studentId = data["studentId"]
         date = data['date']
         if 'image' not in request.files:
             flash('No file part')
@@ -193,22 +191,28 @@ def diem_danh():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename.split('.')[-2]+'_upload.jpg'))
             query0 = {"id": classId}
             class_0 = db_classes.find_one(query0)
+            students = list(db_students.find())
+            input_face = load_image_file(
+                os.path.join(app.config['UPLOAD_FOLDER'], filename.split('.')[-2] + '_upload.jpg'))
+            input_face = face_encodings(input_face, num_jitters = 50)[0]
+            for student in students:
+                diem_danh = dd(input_face,student['encoded_face'])[0]
+                if diem_danh:
+                    studentId = student['id']
+            try:
+                temp = studentId
+            except:
+                return dumps({"status": int(0)})
             for j,days in enumerate(class_0['DateCheckin']):
                 if days['date'] == date:
                     for i,student in enumerate(days["student"]):
                         if student['studentID'] == studentId:
-                            input_face = load_image_file(
-                                os.path.join(app.config['UPLOAD_FOLDER'], filename.split('.')[-2] + '_upload.jpg'))
-                            query = {"id": studentId}
-                            sinhvien = db_students.find_one(query)
-                            stored_face = np.asarray(sinhvien['encoded_face'])
-                            diemdanh = dd(input_face, stored_face)
                             query_status = {
                                 "id": classId,
                             }
-                            newvalues = {"$set": {"DateCheckin."+str(j)+".student."+str(i)+".status": 1}}
+                            newvalues = {"$set": {"DateCheckin."+str(j)+".student."+str(i)+".status": 0}}
                             db_classes.update_one(query_status, newvalues)
-                            return dumps({"status": db_classes.find_one({"id":classId})})
+                            return dumps({"status": int(diem_danh)})
     except Exception as e:
         print(e)
         return dumps({"status": int(0)})
