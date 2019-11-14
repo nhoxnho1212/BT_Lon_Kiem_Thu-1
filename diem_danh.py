@@ -1,9 +1,8 @@
 from face_recognition import compare_faces
-from face_recognition import face_encodings
-import diem_danh
+
 def diem_danh(input_face, stored_face):
     try:
-        input_face_encode = face_encodings(input_face,num_jitters=1)[0]
-        return compare_faces([stored_face], input_face_encode)
+        input_face_encode = input_face
+        return compare_faces([stored_face], input_face_encode, tolerance=0.5)
     except:
         return None
