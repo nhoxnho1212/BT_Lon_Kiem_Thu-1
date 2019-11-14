@@ -194,25 +194,38 @@ def diem_danh():
             students = list(db_students.find())
             input_face = load_image_file(
                 os.path.join(app.config['UPLOAD_FOLDER'], filename.split('.')[-2] + '_upload.jpg'))
-            input_face = face_encodings(input_face, num_jitters = 50)[0]
+            input_face = face_encodings(input_face, num_jitters = 1)[0]
             for student in students:
                 diem_danh = dd(input_face,student['encoded_face'])[0]
                 if diem_danh:
                     studentId = student['id']
+                    break
             try:
                 temp = studentId
             except:
                 return dumps({"status": int(0)})
-            for j,days in enumerate(class_0['DateCheckin']):
+            check_date = False
+            for i,days in enumerate(class_0['DateCheckin']):
                 if days['date'] == date:
-                    for i,student in enumerate(days["student"]):
-                        if student['studentID'] == studentId:
-                            query_status = {
-                                "id": classId,
-                            }
-                            newvalues = {"$set": {"DateCheckin."+str(j)+".student."+str(i)+".status": 0}}
-                            db_classes.update_one(query_status, newvalues)
-                            return dumps({"status": int(diem_danh)})
+                    check_date = True
+                    break
+                else:
+                    pass
+
+            if check_date:
+                for i, days in enumerate(class_0['DateCheckin']):
+                    if(date == days['date']):
+                        for j,student in enumerate(days["student"]):
+                            if student['studentID'] == studentId:
+                                query_status = {
+                                    "id": classId,
+                                }
+                                newvalues = {"$set": {"DateCheckin."+str(i)+".student."+str(j)+".status": 1}}
+                                db_classes.update_one(query_status, newvalues)
+                                return dumps({"status": int(diem_danh), "data": studentId})
+                    else: pass
+            else:
+                return dumps({"status": int(check_date)})
     except Exception as e:
         print(e)
         return dumps({"status": int(0)})
