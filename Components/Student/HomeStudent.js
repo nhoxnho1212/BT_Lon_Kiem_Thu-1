@@ -26,6 +26,7 @@ class HomeStudent extends Component {
                 height: '100%',
                 backgroundColor: '#E5E6E7',
             },
+
             header: {
                 position: 'absolute',
                 left: '0%',
@@ -35,6 +36,7 @@ class HomeStudent extends Component {
                 width: '100%',
                 height: 61,
             },
+
             buttonUser: {
                 position: 'absolute',
                 height: 38,
@@ -54,6 +56,20 @@ class HomeStudent extends Component {
                 right: 0,
                 top: 15,
             },
+
+            backIconExit: {
+                position: 'absolute',
+                left: '5%',
+                height: 38,
+                width: 38,
+                top: 10,
+            },
+            imgBackIconExit: {
+                position: 'absolute',
+                height: 30,
+                width: 30,
+            },
+            
             buttonQuanLyLopHoc: {
                 position: 'absolute',
                 left: '11.11%',
@@ -109,9 +125,15 @@ class HomeStudent extends Component {
                     <Image source={require('./image/userAvatar.png')} style={styles.userAvatar} />
                     <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
                 </TouchableOpacity>
+
+                <TouchableOpacity style={styles.backIconExit}
+                    onPress={() => { this.props.navigation.navigate('Login') }
+                    }>
+                    <Image source={require('./image/backIconExit.png')} style={styles.imgBackIconExit} />
+                </TouchableOpacity>
  
                 <TouchableOpacity style={styles.buttonThongKe} onPress={() => {
-                        this.props.navigation.navigate('HomeBackStudent')
+                        this.props.navigation.navigate('HomeProfileStudent')
                     }}>
                     <Image source={require('./image/buttonThongKe.png')} style={{ height: '100%', width: '100%' ,resizeMode:'contain'}} />
                     <View style={styles.absoluteViewBtnThongKe}>

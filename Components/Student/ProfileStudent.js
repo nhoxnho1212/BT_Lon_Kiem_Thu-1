@@ -4,10 +4,17 @@ import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView 
 import eduIcon from './image/eduIcon.png'
 import { FlatList } from 'react-native-gesture-handler';
 
-class HomeTeacher extends Component {
+
+class ProfileStudent extends Component {
     static navigationOptions = {
         header: null
     };
+
+    toggleDrawer = () => {
+        //Props to open/close the drawer
+        this.props.navigation.toggleDrawer();
+    };
+
 
     constructor(props) {
         super(props);
@@ -64,29 +71,24 @@ class HomeTeacher extends Component {
 
             buttonDiemDanhTheoMonHoc: {
                 position: 'absolute',
-                left: '22.44 %',
-                right: '18.56 %',
-                top: '42.53 %',
-                bottom: '48 %',
+                left: 0,
+                right: 0,
+                top: '40.53 %',
+                bottom: '50 %',
                 marginBottom: 16,
-            },
-            absoluteViewBtnDiemDanhTheoMonHoc: {
-                flex: 1,
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                justifyContent: 'center',
             },
             TextDiemDanhTheoMonHoc: {
                 fontFamily: 'Roboto',
                 fontStyle: 'normal',
-                fontWeight: 'bold',
-                fontSize: 16,
-                lineHeight: 16,
+                fontSize: 20,
                 textAlign: 'center',
                 color: '#488DF5',
                 display: 'flex',
-
+                textTransform: 'uppercase',
+                marginBottom: 8,
+                fontWeight: '700',
+                position: 'absolute',
+                left: '5%',
             },
 
             backIconExit: {
@@ -116,8 +118,8 @@ class HomeTeacher extends Component {
                 top: '5%',
             },
             categoryImage: {
-                width: 64,
-                height: 64
+                width: 90,
+                height: 70,
             },
             title: {
                 textTransform: 'uppercase',
@@ -134,6 +136,22 @@ class HomeTeacher extends Component {
                 // backgroundColor: '#C4C4C4',
             }
         })
+        DrawListView = () => {
+            let listSubject = ['Cơ sở dữ liệu nâng cao', 'Kiểm thử phần mềm', 'Xử lý ảnh']
+            let table = []
+            for (let i = 0; i < 10; i++) {
+                table.push(
+                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('HomeDiemDanhStudent') }}
+                    >
+                        <View style={styles.scrollViewContainer}>
+                            <Text style={styles.title}>{listSubject[i]}</Text>
+                            <Image style={styles.categoryImage} source={eduIcon} />
+                        </View>
+                    </TouchableOpacity>
+                )
+            }
+            return table;
+        }
         return (
 
 
@@ -143,78 +161,30 @@ class HomeTeacher extends Component {
                 <Image source={require('./image/header.png')} style={styles.header} />
                 <Image source={require('./image/avaUser.png')} style={styles.profile} />
 
-                <TouchableOpacity style={styles.buttonUser} >
+                <TouchableOpacity style={styles.buttonUser} onPress={() => { this.toggleDrawer() }} >
                     <Image source={require('./image/userAvatar.png')} style={styles.userAvatar} />
                     <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.backIconExit} >
+                <TouchableOpacity style={styles.backIconExit}
+                    onPress={() => { this.props.navigation.navigate('HomeStudent') }
+                    }>
                     <Image source={require('./image/backIconExit.png')} style={styles.imgBackIconExit} />
                 </TouchableOpacity>
-                {/* <View style={{ top: '50%', backgroundColor: 'red', height: '100%' }}> */}
-                {/* <ScrollView style={{backgroundColor: 'red', width: '100%', height: '100%'}}>
-                    <TouchableOpacity style={styles.buttonDiemDanhTheoMonHoc}>
-                        <Image source={require('./image/recDiemDanhTheoMonHoc.png')} style={{ height: '100%', width: '100%' }} />
-                        <View style={styles.absoluteViewBtnDiemDanhTheoMonHoc}>
-                            <Text style={styles.TextDiemDanhTheoMonHoc}>Điểm danh theo môn học:</Text>
-                        </View>
-                    </TouchableOpacity>
-                </ScrollView> */}
-                {/* </View> */}
-                {/* </View> */}
-                {/* {() => {
-                    let table = []
-                    for (let i = 0; i < 3; i++) {
-                        table.push(
-                            <TouchableOpacity style={styles.buttonDiemDanhTheoMonHoc}>
-                                <Image source={require('./image/recDiemDanhTheoMonHoc.png')} style={{ height: '100%', width: '100%', resizeMode: 'contain' }} />
-                                <View style={styles.absoluteViewBtnDiemDanhTheoMonHoc}>
-                                    <Text style={styles.TextDiemDanhTheoMonHoc}>Điểm danh theo môn học:</Text>
-                                </View>
-                            </TouchableOpacity>
-                        )
-                    }
-                    return table
-                }} */}
+
                 <View style={styles.buttonDiemDanhTheoMonHoc}>
-                    <Image source={require('./image/recDiemDanhTheoMonHoc.png')} style={{ height: '100%', width: '100%' }} />
-                    <View style={styles.absoluteViewBtnDiemDanhTheoMonHoc}>
-                        <Text style={styles.TextDiemDanhTheoMonHoc}>Điểm danh theo môn học:</Text>
-                    </View>
+                    <Text style={styles.TextDiemDanhTheoMonHoc}>Điểm danh theo môn học</Text>
                 </View>
 
-                <View style={{ top: '50%' }}>
+                <View style={{ position: 'absolute', top: '47%', bottom: 0, left: 0, right: 0, }}>
                     <ScrollView style={{ paddingLeft: 16, paddingRight: 16 }}>
-                        <View style={styles.scrollViewContainer}>
-                            <Text style={styles.title}>Cơ sở dữ liệu nâng cao</Text>
-                            <Image style={styles.categoryImage} source={eduIcon} />
-                        </View>
-                        <View style={styles.scrollViewContainer}>
-                            <Text style={styles.title}>Kiểm thử phần mềm</Text>
-                            <Image style={styles.categoryImage} source={eduIcon} />
-                        </View>
-                        <View style={styles.scrollViewContainer}>
-                            <Text style={styles.title}>Xử lý ảnh</Text>
-                            <Image style={styles.categoryImage} source={eduIcon} />
-                        </View>
-                        <View style={styles.scrollViewContainer}>
-                            <Text style={styles.title}>Diem danh</Text>
-                            <Image style={styles.categoryImage} source={eduIcon} />
-                        </View>
-                        <View style={styles.scrollViewContainer}>
-                            <Text style={styles.title}>Diem danh</Text>
-                            <Image style={styles.categoryImage} source={eduIcon} />
-                        </View>
-                        <View style={styles.scrollViewContainer}>
-                            <Text style={styles.title}>Diem danh</Text>
-                            <Image style={styles.categoryImage} source={eduIcon} />
-                        </View>
+                        {DrawListView()}
                     </ScrollView>
                 </View>
                 <View style={styles.areaViewInfomation}>
-                    <Text style = {styles.title }>Nguyễn Trần Nhật Thiện</Text>
-                    <Text style = {styles.title }>1751012068</Text>
-                    <Text style = {styles.title }>17/10/1999</Text>
+                    <Text style={styles.title}>Nguyễn Trần Nhật Thiện</Text>
+                    <Text style={styles.title}>1751012068</Text>
+                    <Text style={styles.title}>17/10/1999</Text>
                 </View>
             </View>
 
@@ -227,7 +197,7 @@ class HomeTeacher extends Component {
 
 
 
-export default HomeTeacher;
+export default ProfileStudent;
 
 
 

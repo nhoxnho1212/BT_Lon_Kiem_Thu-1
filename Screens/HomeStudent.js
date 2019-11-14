@@ -13,7 +13,7 @@ const DrawerNavigator = createDrawerNavigator(
         //Title
         screen: HomeStudent,
         navigationOptions: {
-            drawerLabel: 'trang chủ',
+            drawerLabel: ('Trang chủ'),
         },
 
     },
