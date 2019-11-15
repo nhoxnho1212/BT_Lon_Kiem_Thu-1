@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { formData } from 'react-native'
-const api = 'http://10.246.133.180:5000';
+const api = 'http://172.16.3.38:5000';
 
 const apiCheckLoginTeacher = api + '/CheckLoginTeacher';
 const apiGetInfoAClass = api + '/GetInfoAClass';

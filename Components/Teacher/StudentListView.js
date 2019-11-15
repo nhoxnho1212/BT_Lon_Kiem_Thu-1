@@ -36,10 +36,13 @@ class Home extends Component {
         let GetInfoAStudentFromServer = await GetInfoAStudent(ClassManager.GetClassID(),studentID);
         this.setState({isLoading:false});
         global.infoAStudentCheckin = GetInfoAStudentFromServer.data;
-        global.infoAStudent= {
-            id: studentID,
-            name: studentName,
+        for (let i in this.state.data){
+            if (this.state.data[i].id == studentID) {
+                global.infoAStudent = this.state.data[i];
+                break;
+            }
         }
+
         if (GetInfoAStudentFromServer.status ==-1 ){
             Alert.alert('', 'Không thể kết nối với máy chủ');
             return {};
@@ -125,7 +128,7 @@ class Home extends Component {
             ScollView_header_HoVaTen: {
                 position: 'absolute',
                 flex: 1,
-                width: '74.6875%',
+                right: '0%',
                 top: '0%',
                 left: '16.5625%',
                 height: Dimensions.get('screen').height * 4.0625 / 100,
@@ -134,18 +137,6 @@ class Home extends Component {
                 // backgroundColor:'#f00',
                 borderRadius: 4,
 
-            },
-            ScollView_IsChecked: {
-                position: 'absolute',
-                flex: 1,
-                width: '8.125%',
-                top: '0%',
-                left: '91.875%',
-                height: Dimensions.get('screen').height * 4.0625 / 100,
-                justifyContent: 'center',
-                backgroundColor: '#C4C4C4',
-                // backgroundColor:'#f00',
-                borderRadius: 4,
             },
             BackgroundScollView_text: {
                 fontFamily: 'Roboto',
@@ -210,7 +201,7 @@ class Home extends Component {
             ScollView_component_HoVaTen: {
                 position: 'absolute',
                 flex: 1,
-                width: '74.6875%',
+                right:'0%',
                 top: '0%',
                 left: '16.5625%',
                 height: Dimensions.get('screen').height * 4.0625 / 100,
@@ -219,18 +210,6 @@ class Home extends Component {
                 // backgroundColor:'#f00',
                 borderRadius: 4,
 
-            },
-            ScollView_component_IsChecked: {
-                position: 'absolute',
-                flex: 1,
-                width: '8.125%',
-                top: '0%',
-                left: '91.875%',
-                height: Dimensions.get('screen').height * 4.0625 / 100,
-                justifyContent: 'center',
-                backgroundColor: '#EAEAEA',
-                // backgroundColor:'#f00',
-                borderRadius: 4,
             },
 
         })
@@ -241,10 +220,6 @@ class Home extends Component {
             let listStudent = this.state.data;
 
             for (let i in listStudent) {
-                var styleIsChecked = StyleSheet.flatten([styles.ScollView_component_IsChecked])
-                if (i % 2 == 0) {
-                    styleIsChecked.backgroundColor = '#488DF5';
-                }
                 table.push(
 
                     <TouchableOpacity style={styles.ButtonComponent_View} onPress={this.OnPress.bind(this,listStudent[i].id,listStudent[i].name)}>
@@ -253,8 +228,6 @@ class Home extends Component {
                         </View>
                         <View style={styles.ScollView_component_HoVaTen}>
                             <Text style={styles.BackgroundScollView_text}>{listStudent[i].name}</Text>
-                        </View>
-                        <View style={styleIsChecked}>
                         </View>
                     </TouchableOpacity>
                 )
@@ -286,9 +259,6 @@ class Home extends Component {
                     </View>
                     <View style={styles.ScollView_header_HoVaTen}>
                         <Text style={styles.BackgroundScollView_text}>Họ và tên</Text>
-                    </View>
-                    <View style={styles.ScollView_IsChecked}>
-                        {/* <Text style={styles.BackgroundScollView_text}>Họ và tên</Text> */}
                     </View>
                     <ScrollView style={styles.ScollViewArea}>
                         <View style={{

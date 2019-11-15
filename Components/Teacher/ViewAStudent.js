@@ -274,7 +274,7 @@ class Home extends Component {
                 <Image source={this.state.UserImage} style={styles.UserImage}></Image>
                 <Text style= {styles.UserName}>{this.state.infoAStudent.name}</Text>
                 <Text style= {styles.UserID}>{this.state.infoAStudent.id}</Text>
-                <Text style= {styles.UserBirthDay}>03-10-1999</Text>
+                <Text style= {styles.UserBirthDay}>{this.state.infoAStudent.birthday}</Text>
                 <View style={styles.BackgroundScollView} >
                     <View style={styles.ScollView_header_NgayHoc}>
                         <Text style={styles.BackgroundScollView_text}>Ngày học</Text>

@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, Alert,ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, Alert, ActivityIndicator } from 'react-native';
 import ChooseLogin from './chooseTypeLogin';
 import { CheckLoginTeacherFromServer } from '../Networking/Server'
 
@@ -9,7 +9,7 @@ class Login extends Component {
         header: null,
         left: null,
         gesturesEnabled: false,
-        isLoading:false,
+        isLoading: false,
     };
     countTime = 0;
     pathDB = '';
@@ -17,7 +17,7 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        global.Classes=[];
+        global.Classes = [];
         this.state = {
             userName: '',
             password: '',
@@ -38,40 +38,36 @@ class Login extends Component {
     }
 
     onPress = async () => {
-        this.setState({isLoading:true});
-        let checkValidAccout = await CheckLoginTeacherFromServer(this.state.userName, this.state.password)
-        this.setState({isLoading:false});
-        if (checkValidAccout.status == 1) {
-            if (this.state.isTeacher) {
-                global.Classes=checkValidAccout.data;
+        if (this.state.isTeacher) {
+            this.setState({ isLoading: true });
+            let checkValidAccout = await CheckLoginTeacherFromServer(this.state.userName, this.state.password)
+            this.setState({ isLoading: false });
+            if (checkValidAccout.status == 1) {
+
+                global.Classes = checkValidAccout.data;
                 return (this.props.navigation.navigate('HomeTeacher'));
+
+            } else {
+                if (checkValidAccout.status == 0) {
+                    Alert.alert('', 'Sai tên đặng nhập hoặc mật khẩu');
+                }
+                if (checkValidAccout.status == -1) {
+                    Alert.alert('', 'Không thể kết nối với máy chủ');
+                }
+                return {};
             }
-            else {
-                return this.props.navigation.navigate('HomeStudent');
-            }
-        } else {
-            if (checkValidAccout.status == 0) {
-                Alert.alert('', 'Sai tên đặng nhập hoặc mật khẩu');
-            }
-            if (checkValidAccout.status == -1) {
-                Alert.alert('', 'Không thể kết nối với máy chủ');
-            }
-            return {};
         }
-
-
-
     }
 
 
     render() {
-        if(this.state.isLoading){
-            return(
-              <View style={{flex: 1, justifyContent:'center'}}>
-                <ActivityIndicator/>
-              </View>
+        if (this.state.isLoading) {
+            return (
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <ActivityIndicator />
+                </View>
             )
-          }
+        }
         const styles = StyleSheet.create({
             container: {
                 width: '100%',
