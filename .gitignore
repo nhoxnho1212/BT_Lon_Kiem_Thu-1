@@ -9,3 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
+package-lock.json
+package.json
+babel.config.js
+yarn-error.log
