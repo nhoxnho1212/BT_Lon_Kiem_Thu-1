@@ -95,11 +95,43 @@ def get_a_student():
                     return_ls.append(new_return)
         return dumps({
             'status': int(1),
-            'data': return_ls
+            'data': return_ls,
         })
     except:
         return dumps({'status': int(0),
         'data': int(0)})
+@app.route('/GetClassOfStudent', methods=['POST'])
+def get_info_sinh_vien():
+    try:
+        sinhvien = request.form.to_dict()
+        id = sinhvien['id']
+        db = db_classes.find()
+        return_ls = []
+        for clas in db:
+            for student in clas['student']:
+                if student['id'] == id:
+                    return_ls.append((clas['id']))
+                    break
+                else:
+                    pass
+        return dumps({"data": return_ls})
+    except:
+        return dumps({"data": int(0)})
+
+@app.route('/GetSinhVien', methods=['POST'])
+def get_sinh_vien():
+    try:
+        data = request.form.to_dict()
+        id = data['id']
+        classes = db_classes.find()
+        for clas in classes:
+            for student in clas['student']:
+                if student['id'] == id:
+                    return dumps({"data":student})
+                else:
+                    return dumps({"data": int(0)})
+    except:
+        return dumps({"data": int(0)})
 
 # @app.route('/add_sinhvien', methods=['POST'])
 # def add_sinh_vien():
