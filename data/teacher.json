@@ -90,8 +90,8 @@
         ]
     },
     {
-        "id": "ITEC001",
-        "name": "CO SO DU LIEU",
+        "id": "ITEC004",
+        "name": "MANG MAY TINH",
         "student: ": [
             {
                 "id": "1751010082",
@@ -108,8 +108,8 @@
         ]
     },
     {
-        "id": "ITEC002",
-        "name": "CO SO DU LIEU",
+        "id": "ITEC005",
+        "name": "TOAN TIN",
         "student:": [
             {
                 "id": "1751010082",
@@ -126,8 +126,8 @@
         ]
     },
     {
-        "id": "ITEC003",
-        "name": "KIEM THU",
+        "id": "ITEC006",
+        "name": "NHAP MON TIN HOC",
         "student:": [
             {
                 "id": "1751010082",
