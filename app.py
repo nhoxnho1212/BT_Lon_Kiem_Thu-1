@@ -4,7 +4,6 @@ from bson.json_util import dumps
 from werkzeug.utils import secure_filename
 from face_recognition import load_image_file
 from face_recognition import face_encodings
-import numpy as np
 from diem_danh import diem_danh as dd
 import os
 
@@ -211,7 +210,6 @@ def diem_danh():
                     break
                 else:
                     pass
-
             if check_date:
                 for i, days in enumerate(class_0['DateCheckin']):
                     if(date == days['date']):
