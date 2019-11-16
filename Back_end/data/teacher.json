@@ -1,0 +1,146 @@
+[
+    {
+        "username": "tuminh",
+        "password": "tuminh",
+        "classes": [
+            {
+                "id": "ITEC001",
+                "name": "CO SO DU LIEU"
+            },
+            {
+                "id": "ITEC002",
+                "name": "XU LY ANH"
+            },
+            {
+                "id": "ITEC003",
+                "name": "KIEM THU"
+            }
+        ]
+    },
+    {
+        "username": "tung",
+        "password": "tung",
+        "classes": [
+            {
+                "id": "ITEC001",
+                "name": "CO SO DU LIEU"
+            },
+            {
+                "id": "ITEC002",
+                "name": "XU LY ANH"
+            },
+            {
+                "id": "ITEC003",
+                "name": "KIEM THU"
+            }
+        ]
+    },
+    {
+        "id": "ITEC001",
+        "name": "CO SO DU LIEU",
+        "student:": [
+            {
+                "id": "1751010082",
+                "name": "DUONG TRAN TU MINH"
+            },
+            {
+                "id": "1751010180",
+                "name": "DO NGUYEN THANH TUNG"
+            },
+            {
+                "id": "1751012068",
+                "name": "NGUYEN TRAN NHAT THIEN"
+            }
+        ]
+    },
+    {
+        "id": "ITEC002",
+        "name": "XU LY ANH",
+        "student:": [
+            {
+                "id": "1751010082",
+                "name": "DUONG TRAN TU MINH"
+            },
+            {
+                "id": "1751010180",
+                "name": "DO NGUYEN THANH TUNG"
+            },
+            {
+                "id": "1751012068",
+                "name": "NGUYEN TRAN NHATTHIEN"
+            }
+        ]
+    },
+    {
+        "id": "ITEC003",
+        "name": "KIEM THU",
+        "student: ": [
+            {
+                "id": "1751010082",
+                "name": "DUONG TRAN TU MINH"
+            },
+            {
+                "id": "1751010180",
+                "name": "DO NGUYEN THANH TUNG"
+            },
+            {
+                "id": "1751012068",
+                "name": "NGUYEN TRAN NHAT THIEN"
+            }
+        ]
+    },
+    {
+        "id": "ITEC004",
+        "name": "MANG MAY TINH",
+        "student: ": [
+            {
+                "id": "1751010082",
+                "name": "DUONG TRAN TU MINH"
+            },
+            {
+                "id": "1751010180",
+                "name": "DO NGUYEN THANH TUNG"
+            },
+            {
+                "id": "1751012068",
+                "name": "NGUYEN TRAN NHAT THIEN"
+            }
+        ]
+    },
+    {
+        "id": "ITEC005",
+        "name": "TOAN TIN",
+        "student:": [
+            {
+                "id": "1751010082",
+                "name": "DUONG TRAN TU MINH"
+            },
+            {
+                "id": "1751010180",
+                "name": "DO NGUYEN THANH TUNG"
+            },
+            {
+                "id": "1751012068",
+                "name": "NGUYEN TRAN NHAT THIEN"
+            }
+        ]
+    },
+    {
+        "id": "ITEC006",
+        "name": "NHAP MON TIN HOC",
+        "student:": [
+            {
+                "id": "1751010082",
+                "name": "DUONG TRAN TU MINH"
+            },
+            {
+                "id": "1751010180",
+                "name": "DO NGUYEN THANH TUNG"
+            },
+            {
+                "id": "1751012068",
+                "name": "NGUYEN TRAN NHAT THIEN"
+            }
+        ]
+    }
+]
