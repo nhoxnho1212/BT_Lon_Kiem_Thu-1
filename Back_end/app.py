@@ -154,12 +154,12 @@ def diem_danh():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename.split('.')[-2]+'_upload.jpg'))
+            file.save(os.path.join(myapp.config['UPLOAD_FOLDER'], filename.split('.')[-2]+'_upload.jpg'))
             query0 = {"id": classId}
             class_0 = db_classes.find_one(query0)
             students = list(db_students.find())
             input_face = load_image_file(
-                os.path.join(app.config['UPLOAD_FOLDER'], filename.split('.')[-2] + '_upload.jpg'))
+                os.path.join(myapp.config['UPLOAD_FOLDER'], filename.split('.')[-2] + '_upload.jpg'))
             input_face = face_encodings(input_face, num_jitters = 1)[0]
             for student in students:
                 diem_danh = dd(input_face,student['encoded_face'])[0]
@@ -170,27 +170,40 @@ def diem_danh():
                 temp = studentId
             except:
                 return dumps({"status": int(0)})
-            check_date = False
-            for i,days in enumerate(class_0['DateCheckin']):
-                if days['date'] == date:
-                    check_date = True
-                    break
+            check_student_query = {"id": classId}
+            class_found = db_classes.find_one(check_student_query)
+            check_student_in_class = False
+            if class_found != None:
+                for student in class_found['student']:
+                    if studentId == student['id']:
+                        check_student_in_class = True
+                        break
                 else:
-                    pass
-            if check_date:
-                for i, days in enumerate(class_0['DateCheckin']):
-                    if(date == days['date']):
-                        for j,student in enumerate(days["student"]):
-                            if student['studentID'] == studentId:
-                                query_status = {
-                                    "id": classId,
-                                }
-                                newvalues = {"$set": {"DateCheckin."+str(i)+".student."+str(j)+".status": 1}}
-                                db_classes.update_one(query_status, newvalues)
-                                return dumps({"status": int(diem_danh), "data": studentId})
-                    else: pass
+                    return dumps({"status": int(check_student_in_class)})
+            check_date = False
+            if check_student_in_class:
+                for i,days in enumerate(class_0['DateCheckin']):
+                    if days['date'] == date:
+                        check_date = True
+                        break
+                    else:
+                        pass
+                if check_date:
+                    for i, days in enumerate(class_0['DateCheckin']):
+                        if(date == days['date']):
+                            for j,student in enumerate(days["student"]):
+                                if student['studentID'] == studentId:
+                                    query_status = {
+                                        "id": classId,
+                                    }
+                                    newvalues = {"$set": {"DateCheckin."+str(i)+".student."+str(j)+".status": 1}}
+                                    db_classes.update_one(query_status, newvalues)
+                                    return dumps({"status": int(diem_danh), "data": studentId})
+                        else: pass
+                else:
+                    return dumps({"status": int(check_date)})
             else:
-                return dumps({"status": int(check_date)})
+                return dumps({"status": int(0)})
     except Exception as e:
         print(e)
         return dumps({"status": int(0)})
