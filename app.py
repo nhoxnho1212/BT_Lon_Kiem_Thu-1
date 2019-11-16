@@ -9,43 +9,38 @@ import os
 
 UPLOAD_FOLDER = 'image/'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
-app = Flask(__name__)
-# dbname = 'sinhvien'
-# app.config["MONGO_URI"] = "mongodb://localhost:27017/" + dbname
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+myapp = Flask(__name__)
+myapp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+myapp.testing = True
 mongo = MongoClient('localhost', 27017)
 db_teacher = mongo.db.teachers
 db_classes = mongo.db.classes
 db_students = mongo.db.students
 
-# db_students.delete_many({})
-# minh_face = face_encodings(load_image_file('tuminh.jpg'), num_jitters = 100)[0]
-# tung_face = face_encodings(load_image_file('tung.jpg'),num_jitters = 100)[0]
-# thien_face = face_encodings(load_image_file('thien.jpg'),num_jitters = 100)[0]
-# students = [
-#     {
-#         "ho_ten": "Duong Tran Tu Minh",
-#         "id": "1751010082",
-#         "encoded_face" : list(minh_face)
-#     },
-#     {
-#         "ho_ten": "Do Nguyen Thanh Tung",
-#         "id": "1751010180",
-#         "encoded_face" : list(tung_face)
-#     },
-#     {
-#         "ho_ten": "Nguyen Tran Nhat Thien",
-#         "id": "1751012068",
-#         "encoded_face" : list(thien_face)
-#     }
-# ]
-# db_students.insert_many(students, ordered= False)
-# # len()
-@app.route('/', methods=['GET'])
+
+@myapp.route('/', methods=['GET'])
 def hello_word():
     return dumps({"status":'Welcome to my app'})
-@app.route('/CheckLoginTeacher',methods=['POST'])
-def check_login():
+@myapp.route('/CheckLoginStudent', methods = ['POST'])
+def check_login_student():
+    try:
+        user = request.form.to_dict()
+        username = user['username']
+        password = user['password']
+        query = {"username": username}
+        userDatabase = db_students.find_one(query)
+        if(username == userDatabase['username'] and password == userDatabase['password']):
+            return dumps({"status": int(1),
+                         "data": get_info_sinh_vien(userDatabase['id'],userDatabase['ho_ten'])})
+        else:
+            return dumps({"status": int(0),
+                          "data": int(0)})
+    except Exception as e:
+        print(e)
+        return dumps({"status": int(0),
+                      "data":int(0)})
+@myapp.route('/CheckLoginTeacher',methods=['POST'])
+def check_login_teacher():
     try:
         user = request.form.to_dict()
         username = user['username']
@@ -63,7 +58,7 @@ def check_login():
         return dumps({"status": int(0),
                       "data": int(0)})
 
-@app.route('/GetInfoAClass', methods=['POST'])
+@myapp.route('/GetInfoAClass', methods=['POST'])
 def get_info_a_class():
     try:
         a_class = request.form.to_dict()
@@ -76,7 +71,7 @@ def get_info_a_class():
         print (e)
         return dumps({"status": int(0),
                       "data": int(0)})
-@app.route('/GetInfoAStudent', methods=['POST'])
+@myapp.route('/GetInfoAStudent', methods=['POST'])
 def get_a_student():
     try:
         student = request.form.to_dict()
@@ -95,30 +90,37 @@ def get_a_student():
                     return_ls.append(new_return)
         return dumps({
             'status': int(1),
-            'data': return_ls,
+            'data': return_ls
         })
     except:
         return dumps({'status': int(0),
         'data': int(0)})
-@app.route('/GetClassOfStudent', methods=['POST'])
-def get_info_sinh_vien():
+# @myapp.route('/GetClassOfStudent', methods=['POST'])
+def get_info_sinh_vien(mssv,name):
     try:
-        sinhvien = request.form.to_dict()
-        id = sinhvien['id']
+        # sinhvien = request.form.to_dict()
+        id = mssv
         db = db_classes.find()
         return_ls = []
+        name_ls = []
         for clas in db:
             for student in clas['student']:
                 if student['id'] == id:
                     return_ls.append((clas['id']))
+                    name_ls.append(clas['name'])
                     break
                 else:
                     pass
-        return dumps({"data": return_ls})
+        return_dict = dict()
+        return_dict['class'] = return_ls
+        return_dict['id'] = id
+        return_dict['name'] = name
+        return_dict['class_name'] = name_ls
+        return return_dict
     except:
-        return dumps({"data": int(0)})
+        return dict()
 
-@app.route('/GetSinhVien', methods=['POST'])
+@myapp.route('/GetSinhVien', methods=['POST'])
 def get_sinh_vien():
     try:
         data = request.form.to_dict()
@@ -137,7 +139,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/diem_danh", methods=["POST"])
+@myapp.route("/diem_danh", methods=["POST"])
 def diem_danh():
     try:
         data = request.form.to_dict()
@@ -193,4 +195,4 @@ def diem_danh():
         print(e)
         return dumps({"status": int(0)})
 if __name__ == '__main__':
-        app.run(host='0.0.0.0',debug = True)
+        myapp.run(host='0.0.0.0',debug = True)
