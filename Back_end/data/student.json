@@ -2,6 +2,8 @@
     {
         "ho_ten": "Duong Tran Tu Minh",
         "id": "1751010082",
+        "username": "minh",
+        "password": "minh",
         "encoded_face": [
             -0.11093166470527649,
             0.06362441927194595,
@@ -136,6 +138,8 @@
     {
         "ho_ten": "Do Nguyen Thanh Tung",
         "id": "1751010180",
+        "username": "tung",
+        "password": "tung",
         "encoded_face": [
             -0.1368633359670639,
             0.15774604678153992,
@@ -270,6 +274,8 @@
     {
         "ho_ten": "Nguyen Tran Nhat Thien",
         "id": "1751012068",
+        "username": "thien",
+        "password": "thien",
         "encoded_face": [
             -0.018153587356209755,
             0.0469546802341938,

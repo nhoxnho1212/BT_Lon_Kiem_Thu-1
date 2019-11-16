@@ -272,5 +272,278 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "ITEC004",
+        "name": "MANG MAY TINH",
+        "student": [
+            {
+                "id": "1751010565",
+                "birthday": "14-06-1999",
+                "name": "LUU HOANG MINH"
+            },
+            {
+                "id": "1751010780",
+                "birthday": "14-06-1999",
+                "name": "NGUYEN THANH TU"
+            },
+            {
+                "id": "1751012333",
+                "birthday": "14-06-1999",
+                "name": "TRAN THANH SON"
+            }
+        ],
+        "DateCheckin": [
+            {
+                "date": "20-10-2019",
+                "student": [
+                    {
+                        "studentID": "1751010565",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010780",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751012333",
+                        "status": 0
+                    }
+                ]
+            },
+            {
+                "date": "27-10-2019",
+                "student": [
+                    {
+                        "studentID": "1751010565",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010780",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751012333",
+                        "status": 0
+                    }
+                ]
+            },
+            {
+                "date": "3-11-2019",
+                "student": [
+                    {
+                        "studentID": "1751010565",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010780",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751012333",
+                        "status": 0
+                    }
+                ]
+            },
+            {
+                "date": "10-11-2019",
+                "student": [
+                    {
+                        "studentID": "1751010565",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010780",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751012333",
+                        "status": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "ITEC005",
+        "name": "TOAN TIN",
+        "student": [
+            {
+                "id": "1751010999",
+                "birthday": "14-06-1999",
+                "name": "LE VAN A"
+            },
+            {
+                "id": "1751010000",
+                "birthday": "14-06-1999",
+                "name": "TRAN VAN B"
+            },
+            {
+                "id": "1751012666",
+                "birthday": "14-06-1999",
+                "name": "TRAN THANH C"
+            }
+        ],
+        "DateCheckin": [
+            {
+                "date": "20-10-2019",
+                "student": [
+                    {
+                        "studentID": "1751010999",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010000",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751012666",
+                        "status": 0
+                    }
+                ]
+            },
+            {
+                "date": "27-10-2019",
+                "student": [
+                    {
+                        "studentID": "1751010999",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010000",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751012666",
+                        "status": 0
+                    }
+                ]
+            },
+            {
+                "date": "3-11-2019",
+                "student": [
+                    {
+                        "studentID": "1751010999",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010000",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751012666",
+                        "status": 0
+                    }
+                ]
+            },
+            {
+                "date": "10-11-2019",
+                "student": [
+                    {
+                        "studentID": "1751010999",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010000",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751012666",
+                        "status": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "ITEC006",
+        "name": "NHAP MON TIN HOC",
+        "student": [
+            {
+                "id": "1751010111",
+                "birthday": "14-06-1999",
+                "name": "NGUYEN VAN E"
+            },
+            {
+                "id": "1751010785",
+                "birthday": "14-06-1999",
+                "name": "LUONG VAN LANG"
+            },
+            {
+                "id": "1751011234",
+                "birthday": "14-06-1999",
+                "name": "NGUYEN MANH HAU"
+            }
+        ],
+        "DateCheckin": [
+            {
+                "date": "20-10-2019",
+                "student": [
+                    {
+                        "studentID": "1751010111",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010785",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751011234",
+                        "status": 0
+                    }
+                ]
+            },
+            {
+                "date": "27-10-2019",
+                "student": [
+                    {
+                        "studentID": "1751010111",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010785",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751011234",
+                        "status": 0
+                    }
+                ]
+            },
+            {
+                "date": "3-11-2019",
+                "student": [
+                    {
+                        "studentID": "1751010111",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010785",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751011234",
+                        "status": 0
+                    }
+                ]
+            },
+            {
+                "date": "10-11-2019",
+                "student": [
+                    {
+                        "studentID": "1751010111",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751010785",
+                        "status": 0
+                    },
+                    {
+                        "studentID": "1751011234",
+                        "status": 0
+                    }
+                ]
+            }
+        ]
     }
 ]
