@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Routes from "./Routes";
-import HomeTeacher from './Screens/HomeTeacher';
+import CameraCheckIn from './Components/Teacher/CameraCheckIn'
 export default function App() {
   return (
-    
+
     <Routes />
-    // <HomeTeacher/>
+    // <ViewAStudent/>
+    // <CameraCheckIn/>
   );
 }
