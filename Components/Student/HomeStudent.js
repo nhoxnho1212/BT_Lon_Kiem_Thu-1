@@ -1,14 +1,16 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity } from 'react-native';
 
-class Home extends Component {
+class HomeStudent extends Component {
     static navigationOptions = {
         header: null
     };
+
     toggleDrawer = () => {
         //Props to open/close the drawer
         this.props.navigation.toggleDrawer();
       };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -52,6 +54,20 @@ class Home extends Component {
                 right: 0,
                 top: 15,
             },
+
+            backIconExit: {
+                position: 'absolute',
+                left: '5%',
+                height: 38,
+                width: 38,
+                top: 10,
+            },
+            imgBackIconExit: {
+                position: 'absolute',
+                height: 30,
+                width: 30,
+            },
+
             buttonQuanLyLopHoc: {
                 position: 'absolute',
                 left: '11.11%',
@@ -63,8 +79,8 @@ class Home extends Component {
                 position: 'absolute',
                 left: '11.11%',
                 right: '11.39%',
-                top: '53.75%',
-                bottom: '37.97%',
+                top: '45.78%',
+                bottom: '45.94%',
             },
             absoluteViewBtnThongKe: {
                 flex: 1,
@@ -96,24 +112,34 @@ class Home extends Component {
 
             },
         })
+
         return (
-            
+
             <View style={styles.container}>
 
                 <StatusBar hidden />
                 <Image source={require('./image/header.png')} style={styles.header} />
 
-                <TouchableOpacity style={styles.buttonUser} onPress={this.toggleDrawer} >
+                <TouchableOpacity style={styles.buttonUser} onPress = {()=>{this.toggleDrawer()}} >
                     <Image source={require('./image/userAvatar.png')} style={styles.userAvatar} />
                     <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonQuanLyLopHoc} onPress={()=>this.props.navigation.navigate('ClassManager')}>
-                    <Image source={require('./image/buttonQuanLyLopHoc.png')} style={{ height: '100%', width: '100%',resizeMode:'contain'}} />
+                <TouchableOpacity style={styles.backIconExit}  onPress={() => {
+                        this.props.navigation.navigate('Login')
+                    }}>
+                    <Image source={require('./image/backIconExit.png')} style={styles.imgBackIconExit} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.buttonThongKe} onPress={() => {
+                        this.props.navigation.navigate('HomeProfileStudent')
+                    }}>
+                    <Image source={require('./image/buttonThongKe.png')} style={{ height: '100%', width: '100%' ,resizeMode:'contain'}} />
                     <View style={styles.absoluteViewBtnThongKe}>
-                        <Text style={styles.TextQuanLyMonHoc}>Quản lý môn học</Text>
+                        <Text style={styles.TextThongKe}>Thông tin cá nhân</Text>
                     </View>
                 </TouchableOpacity>
+
             </View>
         );
     }
@@ -121,5 +147,4 @@ class Home extends Component {
 
 
 
-export default Home;
-
+export default HomeStudent;

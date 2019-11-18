@@ -108,12 +108,20 @@ class Home extends Component {
                     <Image source={require('./image/PolygonShowButton.png')} style={styles.PolygonShowButton} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonQuanLyLopHoc} onPress={()=>this.props.navigation.navigate('ClassManager')}>
+                <TouchableOpacity style={styles.buttonQuanLyLopHoc}>
                     <Image source={require('./image/buttonQuanLyLopHoc.png')} style={{ height: '100%', width: '100%',resizeMode:'contain'}} />
                     <View style={styles.absoluteViewBtnThongKe}>
                         <Text style={styles.TextQuanLyMonHoc}>Quản lý môn học</Text>
                     </View>
                 </TouchableOpacity>
+
+                <TouchableOpacity style={styles.buttonThongKe}>
+                    <Image source={require('./image/buttonThongKe.png')} style={{ height: '100%', width: '100%' ,resizeMode:'contain'}} />
+                    <View style={styles.absoluteViewBtnThongKe}>
+                        <Text style={styles.TextThongKe}>Thống kê</Text>
+                    </View>
+                </TouchableOpacity>
+
             </View>
         );
     }
@@ -122,4 +130,3 @@ class Home extends Component {
 
 
 export default Home;
-

@@ -1,10 +1,16 @@
+
 import React, { Component } from "react";
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import Login from "./Screens/Login";
 import ChooseLogin from './Screens/chooseTypeLogin';
 import HomeTeacher from './Screens/HomeTeacher';
-import HomeStudent from './Screens/HomeStudent'
+import HomeStudent from './Screens/HomeStudent';
+import HomeProfileStudent from './Screens/HomeProfileStudent';
+import HomeDiemDanhStudent from './Screens/HomeDiemDanhStudent';
+import MainHomeStudent from './Components/Student/HomeStudent';
+import HomeBackStudent from './Components/Student/HomeBackStudent';
+import ProfileStudent from './Components/Student/ProfileStudent';
 const Project= createStackNavigator({
   ChooseLogin: {
     screen: ChooseLogin,
@@ -23,7 +29,32 @@ const Project= createStackNavigator({
   },
   HomeStudent: {
     screen: HomeStudent,
-  }
+    navigationOptions : {
+      header: null
+    },
+  },
+  HomeProfileStudent: {
+    screen: HomeProfileStudent,
+    navigationOptions : {
+      header: null
+    },
+  },
+  HomeDiemDanhStudent: {
+    screen: HomeDiemDanhStudent,
+    navigationOptions : {
+      header: null
+    },
+  },
+  MainHomeStudent: {
+    screen: MainHomeStudent,
+  },
+  HomeBackStudent: {
+    screen: HomeBackStudent,
+  },
+  ProfileStudent: {
+    screen:ProfileStudent,
+  },
   
 });
+
 export default createAppContainer(Project);
