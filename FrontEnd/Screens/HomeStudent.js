@@ -28,7 +28,7 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Alert, AsyncSto
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
-import HomeStudent from '../../Components/Student/HomeStudent';
+import HomeStudent from '../Components/Student/HomeStudent';
 
 
 const DrawerNavigator = createDrawerNavigator(

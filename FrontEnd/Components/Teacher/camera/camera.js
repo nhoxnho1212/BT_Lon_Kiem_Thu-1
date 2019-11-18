@@ -46,7 +46,7 @@ export default class CameraPage extends React.Component {
     }
     var today = dd + '-' + mm + '-' + yyyy;
     this.setState({ isloading: true });
-    let req = await Checkin(ClassManager.GetClassID(), photoData, '27-10-2019');
+    let req = await Checkin(ClassManager.GetClassID(), photoData, today);
     this.setState({ isloading: false });
     console.log(req.status);
     if (req.status == -1) {
