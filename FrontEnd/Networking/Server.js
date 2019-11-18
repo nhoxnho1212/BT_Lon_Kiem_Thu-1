@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { formData } from 'react-native'
-const api = 'http://10.5.50.81:5000';
+const api = 'http://10.246.135.201:5000';
 
 const apiCheckLoginTeacher = api + '/CheckLoginTeacher';
+const apiCheckLoginStudent = api + '/CheckLoginStudent';
 const apiGetInfoAClass = api + '/GetInfoAClass';
 const apiGetInfoAStudent = api + '/GetInfoAStudent';
 const apiCheckin = api + '/diem_danh';
@@ -35,6 +36,36 @@ async function CheckLoginTeacherFromServer(username, password) {
         });
     return responseFromServer;
 }
+
+async function CheckLoginStudentFromServer(username, password) {
+    let responseFromServer = {
+        isloading: true,
+        status: -1,
+        data: [],
+    }
+    let formData = new FormData()
+    formData.append('username', username);
+    formData.append('password', password);
+    await fetch(apiCheckLoginStudent, {
+        method: 'POST',
+        headers: {
+            'content-Type': 'multipart/form-data',
+        },
+        body: formData
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            responseFromServer.status = responseJson.status;
+            responseFromServer.data = responseJson.data;
+            return responseFromServer;
+        })
+        .catch((error) => {
+            console.log(error);
+            return responseFromServer;
+        });
+    return responseFromServer;
+}
+
 
 async function GetInfoClass(id) {
     let responseFromServer = {
@@ -130,8 +161,9 @@ async function Checkin(ClassID, image, date) {
 
 
 
-
 export { GetInfoAStudent };
 export { CheckLoginTeacherFromServer };
+export { CheckLoginStudentFromServer };
 export { GetInfoClass };
 export { Checkin };
+
