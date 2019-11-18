@@ -81,7 +81,7 @@ class HomeTeacher extends Component {
                 display: 'flex',
 
             },
-            
+
             backIconExit: {
                 position: 'absolute',
                 left: '5%',
@@ -119,7 +119,7 @@ class HomeTeacher extends Component {
                 left: '50%',
                 color: '#488DF5',
                 display: 'flex',
-                
+
             },
             btnIconExit: {
                 position: 'absolute',
@@ -176,7 +176,7 @@ class HomeTeacher extends Component {
                     </View>
                 </TouchableOpacity>
 
-                
+
             </View>
         );
     }
@@ -184,4 +184,4 @@ class HomeTeacher extends Component {
 
 
 
-export default HomeTeacher;
+export default HomeTeacher; 

@@ -6,6 +6,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import DiemDanhStudent from '../Components/Student/DiemDanhStudent';
 
 
+
 const DrawerNavigator = createDrawerNavigator(
     {
     //Drawer Optons and indexing
@@ -15,8 +16,9 @@ const DrawerNavigator = createDrawerNavigator(
         navigationOptions: {
             drawerLabel: ('Trang chủ'),
         },
-
+    
     },
+
     
 },
 {
@@ -28,4 +30,3 @@ const DrawerNavigator = createDrawerNavigator(
 
 
 export default createAppContainer(DrawerNavigator);
-
